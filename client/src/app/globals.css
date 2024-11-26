@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  color: #f9fafb;
+  background-color: #030712;
+  scroll-behavior: smooth;
+}
