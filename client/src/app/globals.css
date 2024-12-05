@@ -4,6 +4,12 @@
 
 body {
   color: #f9fafb;
+  /*color: #1e293b;*/
+  /*color: #334155;*/
   background-color: #030712;
   scroll-behavior: smooth;
+}
+
+input {
+  color-scheme: dark;
 }

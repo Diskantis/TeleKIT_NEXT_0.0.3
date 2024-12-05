@@ -1,10 +1,12 @@
-import Table from "@/components/Table";
-import Pagination from "@/components/Pagination";
+import React from "react";
+
 import Link from "next/link";
 import Image from "next/image";
-import { role, userData } from "@/lib/data";
-import React from "react";
+import Table from "@/components/Table";
+import Pagination from "@/components/Pagination";
 import TableSearch from "@/components/TableSearch";
+import { role, userData } from "@/lib/data";
+import FormModal from "@/components/FormModal";
 
 type User = {
   id: number;
@@ -30,7 +32,7 @@ const columns = [
   {
     header: "Аватар",
     accessor: "avatar",
-    className: "hidden text-center md:table-cell border-r border-gray-600",
+    className: "hidden text-center lg:table-cell border-r border-gray-600",
   },
   {
     header: "Фамилия",
@@ -65,9 +67,10 @@ const columns = [
   {
     header: "Дата регистрации",
     accessor: "createdAt",
-    className: `hidden text-center lg:table-cell ${role === "ADMIN" && "border-r border-gray-600"}`,
+    className: `hidden text-center xl:table-cell ${role === "ADMIN" && "border-r border-gray-600"}`,
   },
 ];
+
 const UserListPage = () => {
   const renderRow = (item: User) => (
     <tr
@@ -77,13 +80,13 @@ const UserListPage = () => {
       <td className="hidden md:table-cell text-center border-r border-gray-600">
         {item.userId}
       </td>
-      <td className="flex items-center justify-center gap-4 py-1 border-r border-gray-600">
+      <td className="hidden lg:flex items-center md:justify-center md:gap-4 py-1 border-r border-gray-600">
         <Image
           src={item.avatar}
           alt=""
           width={40}
           height={40}
-          className="md:hidden xl:block w-9 h-9 rounded-full object-cover"
+          className="w-9 h-9 rounded-full object-cover"
         />
       </td>
       <td className="hidden md:table-cell pl-2 border-r border-gray-600">
@@ -95,41 +98,31 @@ const UserListPage = () => {
       <td className="hidden md:table-cell pl-2 border-r border-gray-600">
         {item.surName}
       </td>
-      <td className="hidden md:table-cell pl-2 border-r border-gray-600">
+      <td className="hidden lg:table-cell pl-2 border-r border-gray-600">
         {item.email}
       </td>
-      <td className="hidden md:table-cell pl-2 border-r border-gray-600">
+      <td className="hidden lg:table-cell pl-2 border-r border-gray-600">
         {item.phone}
       </td>
-      <td className="hidden md:table-cell text-center border-r border-gray-600">
+      <td className="hidden lg:table-cell text-center border-r border-gray-600">
         {item.role}
       </td>
       <td
-        className={`hidden md:table-cell text-center ${role === "ADMIN" && "border-r border-gray-600"}`}
+        className={`hidden lg:table-cell text-center ${role === "ADMIN" && "border-r border-gray-600"}`}
       >
         {item.createdAt}
       </td>
       {role === "ADMIN" && (
         <td>
           <div className="flex items-center justify-center gap-2">
-            <Link href={`/list/teachers/${item.id}`}>
-              <button
-                className="w-8 h-8 flex items-center justify-center rounded-full border-none bg-transparent
-              hover:border-[1px] hover:border-lime-700 hover:bg-lime-700"
-              >
-                <svg className="w-5 h-5 flex fill-lime-500 hover:fill-gray-50">
-                  <use xlinkHref="/icon.svg#edit" width={20} height={20} />
+            <Link href={`/list/users/${item.id}`}>
+              <button className="w-8 h-8 flex items-center justify-center rounded-full focus:outline-none hover:bg-lime-700">
+                <svg className="w-8 h-8 p-[6px] flex fill-lime-500 hover:fill-gray-50">
+                  <use xlinkHref="/icon.svg#eye" width={20} height={20} />
                 </svg>
               </button>
             </Link>
-            <button
-              className="w-7 h-7 flex items-center justify-center rounded-full border-none bg-transparent
-              hover:border-[1px] hover:border-red-600 hover:bg-red-600"
-            >
-              <svg className="w-5 h-5 flex fill-red-600 hover:fill-gray-50">
-                <use xlinkHref="/icon.svg#delete" width={20} height={20} />
-              </svg>
-            </button>
+            <FormModal table="user" type="delete" id={item.id} />
           </div>
         </td>
       )}
@@ -153,13 +146,7 @@ const UserListPage = () => {
                 <use xlinkHref="/icon.svg#sort" width={20} height={20} />
               </svg>
             </button>
-            {role === "ADMIN" && (
-              <button className="flex items-center justify-center rounded-full bg-orange-400">
-                <svg className="w-8 h-8 fill-slate-900">
-                  <use xlinkHref="/icon.svg#create" width={32} height={32} />
-                </svg>
-              </button>
-            )}
+            {role === "ADMIN" && <FormModal table="user" type="create" />}
           </div>
         </div>
       </div>

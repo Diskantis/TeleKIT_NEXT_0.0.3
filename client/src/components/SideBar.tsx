@@ -3,55 +3,54 @@ import Link from "next/link";
 import { role } from "@/lib/data";
 
 type Menu = {
-  title: string;
-  items: {
-    icon: string;
-    label: string;
-    href: string;
-    visible: string[];
-  }[];
+  icon: string;
+  label: string;
+  href: string;
+  visible: string[];
 }[];
 
 const SideBar = ({ menu }: { menu: Menu }) => {
   return (
-    <div className="h-[calc(100vh-112px)] bg-gray-900 mx-4 py-4 pr-4 rounded-md">
+    <div className="flex flex-col gap-2 mt-6">
       {role === "GUEST" ? (
         <>
           <h1 className="uppercase pb-[20px] font-light pl-4 cursor-default">
             Телевизионный журналистский комплект
           </h1>
-          <p className="uppercase text-orange-300 pl-4 italic lg:block cursor-default">
+          <p
+            className="uppercase text-orange-300 pl-4 italic
+           lg:block cursor-default"
+          >
             ЗАО «Второй национальный телеканал»
           </p>
         </>
       ) : (
-        menu.map((i) => (
-          <div key={i.items[0].label} className="flex flex-col gap-2">
-            <span className="hidden lg:block text-gray-400 font-light my-2">
-              {/*{i.title}*/}
-            </span>
-            {i.items.map((item) => {
-              if (item.visible.includes(role)) {
-                return (
-                  <div
-                    key={item.label}
-                    className="md:px-4 rounded-r-md hover:bg-cyan-700"
+        menu.map((item) => {
+          if (item.visible.includes(role)) {
+            return (
+              <div
+                key={item.label}
+                className="rounded-r-md hover:bg-cyan-700
+                 xs:px-4 xs:rounded-r-none md:rounded-r-md"
+              >
+                <Link
+                  href={item.href}
+                  className="2xl:flex items-center justify-center lg:justify-start text-gray-200"
+                >
+                  <svg
+                    className="w-6 h-5 mr-2 hiddenjustify-center fill-gray-300
+                   xs:flex lg:hidden 2xl:flex"
                   >
-                    <Link
-                      href={item.href}
-                      className="flex items-center justify-center lg:justify-start gap-4 text-gray-200"
-                    >
-                      <svg className="w-5 h-5 flex fill-gray-300">
-                        <use xlinkHref={item.icon} width={20} height={20} />
-                      </svg>
-                      <span className="hidden lg:block">{item.label}</span>
-                    </Link>
-                  </div>
-                );
-              }
-            })}
-          </div>
-        ))
+                    <use xlinkHref={item.icon} width={20} height={20} />
+                  </svg>
+                  <span className="hidden lg:block lg:w-full">
+                    {item.label}
+                  </span>
+                </Link>
+              </div>
+            );
+          }
+        })
       )}
     </div>
   );
