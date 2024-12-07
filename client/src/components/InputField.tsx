@@ -9,7 +9,7 @@ type InputFieldProps = {
   register: any;
   name: string;
   defaultValue?: string;
-  pattern?: string;
+  disable?: boolean;
   error?: FieldError;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 };
@@ -22,6 +22,7 @@ const InputField = ({
   register,
   name,
   defaultValue,
+  disable,
   error,
   inputProps,
 }: InputFieldProps) => {
@@ -29,6 +30,7 @@ const InputField = ({
     <div className={`flex flex-col gap-2 ${size}`}>
       <label className="text-sm text-gray-500">{label}</label>
       <input
+        disabled={disable}
         type={type}
         defaultValue={defaultValue}
         className={`ring-[1.5px] ring-gray-300 p-2 ${padding} rounded-md text-base w-full bg-gray-700 outline-none`}

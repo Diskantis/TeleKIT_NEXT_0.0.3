@@ -33,29 +33,41 @@ const FormModal = ({
 }) => {
   const tableName = table === "user" ? "пользователя" : "получателя";
   const sizeIcon = type === "create" ? "32" : "20";
+
   const bgColor =
     type === "create"
       ? "rounded-full bg-orange-400"
       : type === "update"
         ? ""
         : "rounded-full focus:outline-none hover:bg-red-600";
+
   const iconColor =
     type === "create"
       ? "fill-slate-900"
       : type === "update"
         ? "px-[5px] pt-[6px] fill-gray-200 hover:fill-gray-500"
         : "px-[6px] pt-[6px] fill-red-600 hover:fill-gray-200";
+
   const [open, setOpen] = useState(false);
 
   const Form = () => {
     return type === "delete" && id ? (
       <form action="" className="p-4 flex flex-col gap-4">
         <span className="text-center font-medium">
-          Все данные будут потеряны. Вы хотите удалить этого {tableName}?
+          Все данные будут потеряны. Вы действительно хотите удалить этого{" "}
+          {tableName}?
         </span>
-        <button className="bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center">
-          Delete
-        </button>
+        <div className="flex gap-4 items-center justify-center">
+          <button className="bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center">
+            Удалить
+          </button>
+          <button
+            className="bg-blue-700 text-white py-2 px-4 rounded-md border-none w-max self-center"
+            onClick={() => setOpen(false)}
+          >
+            Отмена
+          </button>
+        </div>
       </form>
     ) : type === "create" || type === "update" ? (
       forms[table](type, data)

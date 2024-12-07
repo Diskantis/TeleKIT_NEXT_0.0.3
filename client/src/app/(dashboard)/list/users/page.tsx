@@ -11,7 +11,7 @@ import FormModal from "@/components/FormModal";
 type User = {
   id: number;
   userId: string;
-  avatar: string;
+  img: string;
   lastName: string;
   firstName: string;
   surName: string;
@@ -31,7 +31,7 @@ const columns = [
   },
   {
     header: "Аватар",
-    accessor: "avatar",
+    accessor: "img",
     className: "hidden text-center lg:table-cell border-r border-gray-600",
   },
   {
@@ -82,7 +82,7 @@ const UserListPage = () => {
       </td>
       <td className="hidden lg:flex items-center md:justify-center md:gap-4 py-1 border-r border-gray-600">
         <Image
-          src={item.avatar}
+          src={item.img}
           alt=""
           width={40}
           height={40}

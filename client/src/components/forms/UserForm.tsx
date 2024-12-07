@@ -26,6 +26,7 @@ const schema = z.object({
     message: "Пароль должен быть длиной не менее 5 символов!",
   }),
   position: z.string().min(1, { message: "Обязательное поле!" }),
+  department: z.string().min(1, { message: "Обязательное поле!" }),
   stateStatus: z.enum(["contract", "freelance"]),
   role: z.enum(["ADMIN", "USER", "GUEST"]),
   lastName: z.string().min(1, { message: "Обязательное поле!" }),
@@ -33,6 +34,7 @@ const schema = z.object({
   surName: z.string(),
   phone: z
     .string({ message: "Обязательное поле!" })
+    // .regex(phoneRegex, {message: "Неверный формат номера телефона"})
     .min(12, { message: "Неполный номер!" }),
   address: z.string(),
   birthday: z.string(),
@@ -75,6 +77,7 @@ const UserForm = ({
       <div className="flex justify-between flex-wrap gap-4">
         <InputField
           label="Имя пользователя"
+          // name={`${data.firstName} ${data.lastName[0]}. ${data.surName[0]}.`}
           name="username"
           size="w-[230px]"
           register={register}
@@ -100,9 +103,17 @@ const UserForm = ({
           error={errors?.password}
         />
         <InputField
+          label="Дирекция"
+          name="department"
+          size="w-[360px]"
+          register={register}
+          defaultValue={data?.department}
+          error={errors?.department}
+        />
+        <InputField
           label="Должность"
           name="position"
-          size="w-full"
+          size="w-[360px]"
           register={register}
           defaultValue={data?.position}
           error={errors?.position}

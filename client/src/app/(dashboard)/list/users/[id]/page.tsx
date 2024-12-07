@@ -23,19 +23,22 @@ const SingleUserPage = () => {
                 type="update"
                 data={{
                   id: 1,
-                  username: "Diskantis",
-                  email: "mn.zajkov@gmail.com",
-                  password: "password",
-                  position: "ведущий инженер",
-                  stateStatus: "Штатный сотрудник",
-                  role: "ADMIN",
+                  userId: "1",
                   lastName: "Зайков",
                   firstName: "Михаил",
                   surName: "Николаевич",
+                  username: "Зайков М.Н.",
+                  email: "mn.zajkov@gmail.com",
+                  password: "password",
+                  department: "Дирекция технического обеспечения",
+                  position: "ведущий инженер",
+                  stateStatus: "Штатный сотрудник",
+                  role: "ADMIN",
                   phone: "+375297739600",
                   address: "г.Минск, ул.Лобанка, д.48, кв.56",
                   birthday: "1975-09-02",
-                  img: "https://images.pexels.com/photos/936126/pexels-photo-936126.jpeg?auto=compress&cs=tinysrgb&w=1200",
+                  img: "https://images.pexels.com/photos/842980/pexels-photo-842980.jpeg?auto=compress&cs=tinysrgb&w=1200",
+                  createdAt: "2024-04-09 08:04:79",
                 }}
               />
             </div>
