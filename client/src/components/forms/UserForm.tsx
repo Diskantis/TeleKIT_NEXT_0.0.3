@@ -103,61 +103,6 @@ const UserForm = ({
           error={errors?.password}
         />
         <InputField
-          label="Дирекция"
-          name="department"
-          size="w-[360px]"
-          register={register}
-          defaultValue={data?.department}
-          error={errors?.department}
-        />
-        <InputField
-          label="Должность"
-          name="position"
-          size="w-[360px]"
-          register={register}
-          defaultValue={data?.position}
-          error={errors?.position}
-        />
-        <div className="flex flex-col gap-2 w-[230px]">
-          <label className="text-sm text-gray-500">Трудовые отношения</label>
-          <select
-            className="ring-[1.5px] h-[40px] ring-gray-300 p-2 rounded-md text-sm w-full bg-gray-700 outline-none"
-            {...register("stateStatus")}
-            defaultValue={data?.stateStatus}
-          >
-            <option value="contract">Штатный сотрудник</option>
-            <option value="freelance">Договор подряда</option>
-          </select>
-          {errors.stateStatus?.message && (
-            <p className="text-xs text-red-400">
-              {errors.stateStatus.message.toString()}
-            </p>
-          )}
-        </div>
-        <div className="flex flex-col gap-2 w-[230px]">
-          <label className="text-sm text-gray-500">Роль</label>
-          <select
-            className="ring-[1.5px] h-[40px] ring-gray-300 p-2 rounded-md text-sm w-full bg-gray-700 outline-none"
-            {...register("role")}
-            defaultValue={data?.role}
-          >
-            <option value="GUEST">GUEST</option>
-            <option value="USER">USER</option>
-            <option value="ADMIN">ADMIN</option>
-          </select>
-          {errors.role?.message && (
-            <p className="text-xs text-red-400">
-              {errors.role.message.toString()}
-            </p>
-          )}
-        </div>
-      </div>
-
-      <span className="pt-8 pb-2 text-lg text-gray-400 font-medium">
-        Персональная информация
-      </span>
-      <div className="flex justify-between flex-wrap gap-4">
-        <InputField
           label="Фамилия"
           name="lastName"
           size="w-[230px]"
@@ -208,24 +153,78 @@ const UserForm = ({
             </p>
           )}
         </div>
+        <div className="flex flex-col gap-2 w-[230px]">
+          <label className="text-sm text-gray-500">Трудовые отношения</label>
+          <select
+            className="ring-[1.5px] h-[40px] ring-gray-300 p-2 rounded-md text-sm w-full bg-gray-700 outline-none"
+            {...register("stateStatus")}
+            defaultValue={data?.stateStatus}
+          >
+            <option value="contract">Штатный сотрудник</option>
+            <option value="freelance">Договор подряда</option>
+          </select>
+          {errors.stateStatus?.message && (
+            <p className="text-xs text-red-400">
+              {errors.stateStatus.message.toString()}
+            </p>
+          )}
+        </div>
+        <div className="flex flex-col gap-2 w-[230px]">
+          <label className="text-sm text-gray-500">Роль</label>
+          <select
+            className="ring-[1.5px] h-[40px] ring-gray-300 p-2 rounded-md text-sm w-full bg-gray-700 outline-none"
+            {...register("role")}
+            defaultValue={data?.role}
+          >
+            <option value="GUEST">GUEST</option>
+            <option value="USER">USER</option>
+            <option value="ADMIN">ADMIN</option>
+          </select>
+          {errors.role?.message && (
+            <p className="text-xs text-red-400">
+              {errors.role.message.toString()}
+            </p>
+          )}
+        </div>
         <InputField
-          label="Адрес"
-          name="address"
-          size="w-[230px]"
+          label="Дирекция"
+          name="department"
+          size="w-[360px]"
           register={register}
-          defaultValue={data?.address}
-          error={errors?.address}
+          defaultValue={data?.department}
+          error={errors?.department}
         />
         <InputField
-          label="День рождения"
-          name="birthday"
-          type="date"
-          size="w-[230px] h-[40px]"
-          padding="py-[7px]"
+          label="Должность"
+          name="position"
+          size="w-[360px]"
           register={register}
-          defaultValue={data?.birthday}
-          error={errors?.birthday}
+          defaultValue={data?.position}
+          error={errors?.position}
         />
+      </div>
+      <span className="pt-4 pb-2 text-lg text-gray-400 font-medium">
+        {/*Персональная информация*/}
+      </span>
+      <div className="flex justify-between flex-wrap gap-4">
+        {/*<InputField*/}
+        {/*  label="Адрес"*/}
+        {/*  name="address"*/}
+        {/*  size="w-[230px]"*/}
+        {/*  register={register}*/}
+        {/*  defaultValue={data?.address}*/}
+        {/*  error={errors?.address}*/}
+        {/*/>*/}
+        {/*<InputField*/}
+        {/*  label="День рождения"*/}
+        {/*  name="birthday"*/}
+        {/*  type="date"*/}
+        {/*  size="w-[230px] h-[40px]"*/}
+        {/*  padding="py-[7px]"*/}
+        {/*  register={register}*/}
+        {/*  defaultValue={data?.birthday}*/}
+        {/*  error={errors?.birthday}*/}
+        {/*/>*/}
         <div className="flex flex-col gap-2 pb-4 w-full md:w-4/4 items-center justify-center">
           <label
             className="text-sm text-gray-200 select-none flex items-center gap-2 cursor-pointer"

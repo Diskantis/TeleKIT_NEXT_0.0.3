@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String      @id @default(uuid())
+  username    String      @unique
+  email       String      @unique
+  password    String
+  lastName    String
+  firstName   String
+  surName     String?
+  department  String
+  position    String
+  phone       String?     @unique
+  stateStatus StateStatus
+  role        Role
+  img         String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Recipient {
+  id          String      @id @default(uuid())
+  username    String      @unique
+  lastName    String
+  firstName   String
+  surName     String?
+  department  String?
+  position    String
+  stateStatus StateStatus
+  phone       String?     @unique
+  img         String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  eventId Int?
+  event   Event? @relation(fields: [eventId], references: [id])
+  kits    Kit[]
+}
+
+model Event {
+  id        Int      @id @default(autoincrement())
+  title     String
+  day       Day
+  startDate DateTime
+  endDate   DateTime
+  startTime DateTime
+  endTime   DateTime
+
+  kits       Kit[]
+  recipients Recipient[]
+}
+
+model Kit {
+  id        Int      @id @default(autoincrement())
+  numberKit String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  eventId     Int?
+  event       Event?      @relation(fields: [eventId], references: [id])
+  recipientId String?
+  recipient   Recipient?  @relation(fields: [recipientId], references: [id])
+  equipmens   Equipment[]
+}
+
+model Equipment {
+  id          Int    @id @default(autoincrement())
+  equipName   String @unique
+  description String
+
+  img       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  kitId         Int?
+  kit           Kit?         @relation(fields: [kitId], references: [id])
+  subCategoryId Int?
+  subCategory   SubCategory? @relation(fields: [subCategoryId], references: [id])
+}
+
+model Category {
+  id      Int    @id @default(autoincrement())
+  catName String @unique
+
+  subCategories SubCategory[]
+}
+
+model SubCategory {
+  id         Int    @id @default(autoincrement())
+  subCatName String @unique
+
+  categoryId Int
+  category   Category    @relation(fields: [categoryId], references: [id])
+  equipments Equipment[]
+}
+
+enum Role {
+  GUEST
+  USER
+  ADMIN
+}
+
+enum StateStatus {
+  contract
+  freelance
+}
+
+enum Day {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
