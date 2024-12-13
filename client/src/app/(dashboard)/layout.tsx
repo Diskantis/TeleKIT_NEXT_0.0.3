@@ -1,33 +1,31 @@
 import React from "react";
 
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import SideBar from "@/components/SideBar";
-import { role } from "@/lib/data";
+import { AUTH } from "@/lib/settings";
 
 const menu = [
   {
     icon: "/icon.svg#calendar",
     label: "Расписание",
-    href: "/schedule",
+    href: "/list/events",
     visible: ["ADMIN", "USER", "GUEST"],
   },
   {
     icon: "/icon.svg#kit",
     label: "Комплекты",
-    href: "/kits",
+    href: "/list/kits",
     visible: ["ADMIN", "USER"],
   },
   {
     icon: "/icon.svg#camera",
     label: "Оборудование",
-    href: "/equipments",
+    href: "/list/equipments",
     visible: ["ADMIN", "USER"],
   },
   {
     icon: "/icon.svg#people",
     label: "Получатели",
-    href: "/recipients",
+    href: "/list/recipients",
     visible: ["ADMIN", "USER"],
   },
   {
@@ -44,45 +42,22 @@ const menu = [
   },
 ];
 
-const account = [
-  {
-    icon: "/icon.svg#profile",
-    label: "Профиль",
-    href: "/profile",
-    visible: ["ADMIN", "USER"],
-  },
-  {
-    icon: "/icon.svg#settings",
-    label: "Настройки",
-    href: "/settings",
-    visible: ["ADMIN"],
-  },
-];
-
-const logout = [
-  {
-    icon: "/icon.svg#logout",
-    label: "ВЫХОД",
-    href: "/logout",
-    visible: ["ADMIN", "USER"],
-  },
-];
-
 export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <div className="h-screen">
-      {/*HEADER*/}
-      <Header />
+    <>
       {/*MAIN*/}
       <div className="flex">
         {/*LEFT*/}
         <div className="w-[12%] sm:w-[13%] lg:w-[12%]">
-          <div className="h-[calc(100vh-96px)] flex flex-col justify-between bg-gray-900 mx-4 py-4 rounded-md xs:pr-0 md:pr-4">
-            {role === "GUEST" ? (
+          <div
+            className="h-[calc(100vh-96px)] flex flex-col justify-between bg-gray-900 mx-4 py-4
+          rounded-md xs:pr-0 md:pr-4"
+          >
+            {AUTH !== "AUTH" ? (
               <div className="mt-4">
                 <h1 className="uppercase pb-[20px] font-light pl-4 cursor-default">
                   Телевизионный
@@ -100,21 +75,17 @@ export default function DashboardLayout({
                 </p>
               </div>
             ) : (
-              <>
-                <SideBar menu={menu} />
-                <div>
-                  <SideBar menu={account} />
-                  <SideBar menu={logout} />
-                </div>
-              </>
+              <SideBar menu={menu} />
             )}
           </div>
         </div>
         {/*RIGHT*/}
-        <div className="w-[88%] sm:w-[87%] lg:w-[88%]">{children}</div>
+        <div className="w-[88%] sm:w-[87%] lg:w-[88%]">
+          <div className="h-full flex flex-col justify-between bg-gray-900 mr-4 p-4 rounded-md">
+            {children}
+          </div>
+        </div>
       </div>
-      {/*FOOTER*/}
-      <Footer />
-    </div>
+    </>
   );
 }

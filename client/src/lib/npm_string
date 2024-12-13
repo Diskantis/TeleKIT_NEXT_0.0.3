@@ -1,0 +1,99 @@
+
+
+
+PRISMA
+
+npm install prisma
+npx prisma init
+    // создает файл .env DATABASE_URL="postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public"
+
+        postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA
+
+        USER: The name of your database user
+        PASSWORD: The password for your database user
+        HOST: The name of your host name (for the local environment, it is localhost)
+        PORT: The port where your database server is running (typically 5432 for PostgreSQL)
+        DATABASE: The name of the database
+        SCHEMA: The name of the schema inside the database
+
+    // папку prisma со схемой schema.prisma
+
+        model Post {
+          id        Int      @id @default(autoincrement())
+          createdAt DateTime @default(now())
+          updatedAt DateTime @updatedAt
+          title     String   @db.VarChar(255)
+          content   String?
+          published Boolean  @default(false)
+          author    User     @relation(fields: [authorId], references: [id])
+          authorId  Int
+        }
+
+npx prisma migrate dev --name init
+    // создает миграцию схемы в базу данных
+
+npm install @prisma/client - устанавливаем Prisma Client
+
+создаем файл с правилом использования Prisma Client
+prisma.ts
+    import { PrismaClient } from '@prisma/client'
+
+    const prismaClientSingleton = () => {
+      return new PrismaClient()
+    }
+
+    declare const globalThis: {
+      prismaGlobal: ReturnType<typeof prismaClientSingleton>;
+    } & typeof global;
+
+    const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
+
+    export default prisma
+
+    if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma
+
+npx prisma migrate dev
+npx prisma db push
+npx prisma db push --force-reset - сброс базы данных
+
+
+Seeding
+
+seed.ts
+    import { PrismaClient } from '@prisma/client'
+    const prisma = new PrismaClient()
+    async function main() {
+      const alice = await prisma.user.upsert({
+        where: { email: 'alice@prisma.io' },
+        update: {},
+        create: {
+          email: 'alice@prisma.io',
+          name: 'Alice',
+          posts: {
+            create: {
+              title: 'Check out Prisma with Next.js',
+              content: 'https://www.prisma.io/nextjs',
+              published: true,
+            },
+          },
+        },
+      })
+      console.log({ alice })
+    }
+    main()
+      .then(async () => {
+        await prisma.$disconnect()
+      })
+      .catch(async (e) => {
+        console.error(e)
+        await prisma.$disconnect()
+        process.exit(1)
+      })
+
+npx prisma db seed - заполнение базы данных из файла seed.ts
+npx prisma migrate reset
+npx prisma migrate dev
+npx prisma studio
+
+    Заполнение базы данных с помощью Prisma ORM происходит двумя способами: вручную с помощью prisma db seed и
+    автоматически в prisma migrate reset и (в некоторых сценариях) prisma migrate dev.

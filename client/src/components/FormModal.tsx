@@ -2,14 +2,18 @@
 
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
+import { Spin } from "antd";
 
 const UserForm = dynamic(() => import("@/components/forms/UserForm"), {
-  loading: () => <h1>Loading...</h1>,
+  // loading: () => <h1>Loading...</h1>,
+  loading: () => <Spin fullscreen />,
 });
+
 const RecipientForm = dynamic(
   () => import("@/components/forms/RecipientForm"),
   {
-    loading: () => <h1>Loading...</h1>,
+    // loading: () => <h1>Loading...</h1>,
+    loading: () => <Spin fullscreen />,
   },
 );
 
@@ -29,7 +33,7 @@ const FormModal = ({
   table: "user" | "recipient";
   type: "create" | "update" | "delete";
   data?: any;
-  id?: number;
+  id?: number | string;
 }) => {
   const tableName = table === "user" ? "пользователя" : "получателя";
   const sizeIcon = type === "create" ? "32" : "20";
