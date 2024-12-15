@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Kit, Prisma, Recipient } from "@prisma/client";
+import { Kit, Prisma, Recipient, RecipientComments } from "@prisma/client";
 import prisma from "@/lib/prisma";
 import { role } from "@/lib/data";
 import { ITEM_PER_PAGE } from "@/lib/settings";
@@ -12,7 +12,9 @@ import Pagination from "@/components/Pagination";
 import TableSearch from "@/components/TableSearch";
 import FormModal from "@/components/FormModal";
 
-type RecipientList = Recipient & { kits: Kit[] };
+type RecipientList = Recipient & { kits: Kit[] } & {
+  recipientComments: RecipientComments[];
+};
 
 const columns = [
   {
@@ -67,6 +69,16 @@ const columns = [
     className: "hidden pl-2 lg:table-cell border-r border-gray-600",
   },
   {
+    header: "Дата начала отношений",
+    accessor: "stateStartDate",
+    className: "hidden pl-2 lg:table-cell border-r border-gray-600",
+  },
+  {
+    header: "Дата окончания отношений",
+    accessor: "stateEndDate",
+    className: "hidden pl-2 lg:table-cell border-r border-gray-600",
+  },
+  {
     header: "Событие",
     accessor: "eventId",
     className: "hidden pl-2 lg:table-cell border-r border-gray-600",
@@ -84,6 +96,11 @@ const columns = [
   {
     header: "Дата обновления",
     accessor: "updatedAt",
+    className: "hidden text-center lg:table-cell border-r border-gray-600",
+  },
+  {
+    header: "Замечания",
+    accessor: "recipientComments",
     className: `hidden text-center xl:table-cell rounded-tr-md
      ${role === "ADMIN" && "border-r border-gray-600 rounded-tr-none"}`,
   },
@@ -106,9 +123,6 @@ const renderRow = (item: RecipientList) => (
         className="w-9 h-9 rounded-full object-cover"
       />
     </td>
-    {/*<td className="hidden md:table-cell pl-2 border-r border-gray-600">*/}
-    {/*  {item.lastName} {item.firstName[0]} {item.surName ? item.surName[0] : ""}*/}
-    {/*</td>*/}
     <td className="hidden md:table-cell pl-2 border-r border-gray-600">
       {item.username}
     </td>
@@ -135,6 +149,12 @@ const renderRow = (item: RecipientList) => (
         ? "Штатный сотрудник"
         : "Договор подряда"}
     </td>
+    <td className="hidden lg:table-cell text-center border-r border-gray-600">
+      {new Intl.DateTimeFormat("ru-RU").format(item.stateStartDate)}
+    </td>
+    <td className="hidden lg:table-cell text-center border-r border-gray-600">
+      {new Intl.DateTimeFormat("ru-RU").format(item.stateEndDate)}
+    </td>
     <td className="hidden md:table-cell text-center border-r border-gray-600">
       {item.eventId}
     </td>
@@ -158,6 +178,9 @@ const renderRow = (item: RecipientList) => (
         minute: "2-digit",
         hour12: false,
       })}
+    </td>
+    <td className="hidden md:table-cell text-center border-r border-gray-600">
+      {item.recipientComments.map((recipcomm) => recipcomm.comment).join(", ")}
     </td>
     {role === "ADMIN" && (
       <td>
@@ -195,12 +218,14 @@ const RecipientListPage = async ({
     for (const [key, value] of Object.entries(queryParams)) {
       if (value !== undefined) {
         switch (key) {
-          case "search": {
+          case "search":
             query.lastName = {
               contains: value,
               mode: "insensitive",
             };
-          }
+            break;
+          default:
+            break;
         }
       }
     }
@@ -211,6 +236,7 @@ const RecipientListPage = async ({
       where: query,
       include: {
         kits: true,
+        recipientComments: true,
       },
       take: ITEM_PER_PAGE,
       skip: ITEM_PER_PAGE * (p - 1),

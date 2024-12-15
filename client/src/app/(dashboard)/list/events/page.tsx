@@ -154,12 +154,14 @@ const EventListPage = async ({
     for (const [key, value] of Object.entries(queryParams)) {
       if (value !== undefined) {
         switch (key) {
-          case "search": {
+          case "search":
             query.title = {
               contains: value,
               mode: "insensitive",
             };
-          }
+            break;
+          default:
+            break;
         }
       }
     }

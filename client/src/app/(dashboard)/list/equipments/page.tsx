@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Prisma, Equipment } from "@prisma/client";
+import { Prisma, Equipment, EquipmentComments } from "@prisma/client";
 import prisma from "@/lib/prisma";
 import { role } from "@/lib/data";
 import { ITEM_PER_PAGE } from "@/lib/settings";
@@ -11,7 +11,9 @@ import Pagination from "@/components/Pagination";
 import TableSearch from "@/components/TableSearch";
 import FormModal from "@/components/FormModal";
 
-type EquipmentList = Equipment;
+type EquipmentList = Equipment & {
+  equipmentComments: EquipmentComments[];
+};
 
 const columns = [
   {
@@ -76,7 +78,7 @@ const columns = [
     className: `hidden text-center pl-2 md:table-cell border-r border-gray-600`,
   },
   {
-    header: "Дада поступления",
+    header: "Дата поступления",
     accessor: "datePurchase",
     className: `hidden pl-2 md:table-cell border-r border-gray-600`,
   },
@@ -87,7 +89,7 @@ const columns = [
   },
   {
     header: "Примечания",
-    accessor: "note",
+    accessor: "equipmentComments",
     className: `hidden pl-2 md:table-cell border-r border-gray-600`,
   },
   {
@@ -148,8 +150,8 @@ const renderRow = (item: EquipmentList) => (
           ? "в работе"
           : "в ремонте"}
     </td>
-    <td className="hidden pl-2 md:table-cell border-r border-gray-600">
-      {/*{item.}*/}
+    <td className="hidden md:table-cell border-r border-gray-600">
+      {item.equipmentComments.map((eqipcomm) => eqipcomm.comment).join(", ")}
     </td>
     <td
       className={`hidden lg:table-cell text-center ${role === "ADMIN" && "border-r border-gray-600"}`}
@@ -198,12 +200,11 @@ const EquipmentListPage = async ({
     for (const [key, value] of Object.entries(queryParams)) {
       if (value !== undefined) {
         switch (key) {
-          case "search": {
-            query.name = {
-              contains: value,
-              mode: "insensitive",
-            };
-          }
+          case "search":
+            query.name = { contains: value, mode: "insensitive" };
+            break;
+          default:
+            break;
         }
       }
     }
@@ -212,7 +213,9 @@ const EquipmentListPage = async ({
   const [data, count] = await prisma.$transaction([
     prisma.equipment.findMany({
       where: query,
-      include: {},
+      include: {
+        equipmentComments: true,
+      },
       take: ITEM_PER_PAGE,
       skip: ITEM_PER_PAGE * (p - 1),
     }),

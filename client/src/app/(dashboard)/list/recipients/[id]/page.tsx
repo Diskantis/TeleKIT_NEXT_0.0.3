@@ -8,7 +8,7 @@ const SingleRecipientPage = () => {
     <div className="h-full flex flex-col bg-gray-900 mr-4 p-4 rounded-md">
       <div className="flex items-center justify-between">
         <h1 className="hidden md:block text-2xl font-semibold">
-          Страница пользователя
+          Страница получателя
         </h1>
       </div>
       <div className="w-full h-[30px] bg-cyan-950 border-b-2 rounded-t-md"></div>

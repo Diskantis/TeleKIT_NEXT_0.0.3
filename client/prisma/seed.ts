@@ -54,8 +54,23 @@ async function main() {
         department: `Дирекция${i}`,
         position: `Должность${i}`,
         stateStatus: i % 2 === 0 ? StateStatus.contract : StateStatus.freelance,
+        stateStartDate: new Date(new Date().setDate(new Date().getDate() + i)),
+        stateEndDate: new Date(
+          new Date().setDate(new Date().getDate() + i + 1),
+        ),
         phone: `+37529123456${i}`,
         eventId: (i % 5) + 1,
+      },
+    });
+  }
+
+  // RECIPIENT COMMENTS
+  for (let i = 1; i <= 30; i++) {
+    await prisma.recipientComments.create({
+      data: {
+        comment: `Замечание ${i}`,
+        createdAt: new Date(new Date().setDate(new Date().getDate() + i)),
+        recipientId: (i % 5) + 1,
       },
     });
   }
@@ -127,11 +142,21 @@ async function main() {
             : StatusEmployment.work
               ? StatusEmployment.repair
               : StatusEmployment.repair,
-        note: `OK ${i}`,
         kitId: (i % 5) + 1,
         categoryId: (i % 5) + 1,
         subCategoryLevel1Id: (i % 5) + 1,
         subCategoryLevel2Id: (i % 5) + 1,
+      },
+    });
+  }
+
+  // EQUIPMENT COMMENTS
+  for (let i = 1; i <= 30; i++) {
+    await prisma.equipmentComments.create({
+      data: {
+        comment: `Замечание ${i}`,
+        createdAt: new Date(new Date().setDate(new Date().getDate() + i)),
+        equipmentId: (i % 5) + 1,
       },
     });
   }

@@ -27,16 +27,18 @@ model User {
 }
 
 model Recipient {
-  id          Int         @id @default(autoincrement())
-  username    String      @unique
-  lastName    String
-  firstName   String
-  surName     String?
-  department  String?
-  position    String
-  stateStatus StateStatus
-  phone       String?     @unique
-  img         String?
+  id             Int         @id @default(autoincrement())
+  username       String      @unique
+  lastName       String
+  firstName      String
+  surName        String?
+  department     String?
+  position       String
+  stateStatus    StateStatus
+  stateStartDate DateTime
+  stateEndDate   DateTime
+  phone          String?     @unique
+  img            String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -44,7 +46,18 @@ model Recipient {
   eventId Int?
   event   Event? @relation(fields: [eventId], references: [id])
 
-  kits Kit[]
+  kits              Kit[]
+  recipientComments RecipientComments[]
+}
+
+model RecipientComments {
+  id      Int    @id @default(autoincrement())
+  comment String
+
+  createdAt DateTime @default(now())
+
+  recipientId Int?
+  recipient   Recipient? @relation(fields: [recipientId], references: [id])
 }
 
 model Event {
@@ -83,7 +96,7 @@ model Category {
   name String @unique
 
   subCategoryLevel1 SubCategoryLevel1[]
-  Equipment         Equipment[]
+  equipments        Equipment[]
 }
 
 model SubCategoryLevel1 {
@@ -94,7 +107,7 @@ model SubCategoryLevel1 {
   category   Category? @relation(fields: [categoryId], references: [id])
 
   subCategoryLevel2 SubCategoryLevel2[]
-  Equipment         Equipment[]
+  equipments        Equipment[]
 }
 
 model SubCategoryLevel2 {
@@ -117,7 +130,6 @@ model Equipment {
   inventoryNumber  String
   datePurchase     String
   statusEmployment StatusEmployment
-  note             String
   img              String[]
 
   createdAt DateTime @default(now())
@@ -131,6 +143,18 @@ model Equipment {
   subCategoryLevel1   SubCategoryLevel1? @relation(fields: [subCategoryLevel1Id], references: [id])
   subCategoryLevel2Id Int?
   subCategoryLevel2   SubCategoryLevel2? @relation(fields: [subCategoryLevel2Id], references: [id])
+
+  equipmentComments EquipmentComments[]
+}
+
+model EquipmentComments {
+  id      Int    @id @default(autoincrement())
+  comment String
+
+  createdAt DateTime @default(now())
+
+  equipmentId Int?
+  equipment   Equipment? @relation(fields: [equipmentId], references: [id])
 }
 
 enum Role {
