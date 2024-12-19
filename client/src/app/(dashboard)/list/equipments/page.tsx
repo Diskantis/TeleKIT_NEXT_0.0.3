@@ -2,7 +2,7 @@ import React from "react";
 
 import { Prisma, Equipment, EquipmentComments } from "@prisma/client";
 import prisma from "@/lib/prisma";
-import { role } from "@/lib/data";
+import { role } from "@/lib/utils";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 
 import Link from "next/link";
@@ -87,16 +87,27 @@ const columns = [
     accessor: "statusEmployment",
     className: `hidden pl-2 md:table-cell border-r border-gray-600`,
   },
-  {
-    header: "Примечания",
-    accessor: "equipmentComments",
-    className: `hidden pl-2 md:table-cell border-r border-gray-600`,
-  },
+  // {
+  //   header: "Примечания",
+  //   accessor: "equipmentComments",
+  //   className: `hidden pl-2 md:table-cell border-r border-gray-600`,
+  // },
   {
     header: "Дата формирования",
     accessor: "updatedAt",
-    className: `hidden text-center xl:table-cell ${role === "ADMIN" && "border-r border-gray-600"}`,
+    className: `hidden text-center xl:table-cell rounded-tr-md ${
+      role === "admin" && "rounded-tr-none border-r border-gray-600"
+    }`,
   },
+  ...(role === "admin"
+    ? [
+        {
+          header: "",
+          accessor: "action",
+          className: "hidden text-center xl:table-cell rounded-tr-md",
+        },
+      ]
+    : []),
 ];
 
 const renderRow = (item: EquipmentList) => (
@@ -150,11 +161,11 @@ const renderRow = (item: EquipmentList) => (
           ? "в работе"
           : "в ремонте"}
     </td>
-    <td className="hidden md:table-cell border-r border-gray-600">
-      {item.equipmentComments.map((eqipcomm) => eqipcomm.comment).join(", ")}
-    </td>
+    {/*<td className="hidden md:table-cell border-r border-gray-600">*/}
+    {/*  {item.equipmentComments.map((eqipcomm) => eqipcomm.comment).join(", ")}*/}
+    {/*</td>*/}
     <td
-      className={`hidden lg:table-cell text-center ${role === "ADMIN" && "border-r border-gray-600"}`}
+      className={`hidden lg:table-cell text-center ${role === "admin" && "border-r border-gray-600"}`}
     >
       {new Intl.DateTimeFormat("ru-RU").format(item.createdAt)}{" "}
       {item.createdAt.toLocaleTimeString("ru-RU", {
@@ -163,10 +174,10 @@ const renderRow = (item: EquipmentList) => (
         hour12: false,
       })}
     </td>
-    {role === "ADMIN" && (
+    {role === "admin" && (
       <td>
         <div className="flex items-center justify-center gap-2">
-          <Link href={`/schedule/events/${item.id}`}>
+          <Link href={`/list/equipments/${item.id}`}>
             <button
               className="w-8 h-8 flex items-center justify-center rounded-full focus:outline-none
              hover:bg-lime-700"
@@ -239,7 +250,7 @@ const EquipmentListPage = async ({
                 <use xlinkHref="/icon.svg#sort" width={20} height={20} />
               </svg>
             </button>
-            {role === "ADMIN" && <FormModal table="user" type="create" />}
+            {role === "admin" && <FormModal table="user" type="create" />}
           </div>
         </div>
       </div>

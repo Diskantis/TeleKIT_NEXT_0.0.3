@@ -2,7 +2,7 @@ import React from "react";
 
 import { Prisma, Kit, Equipment } from "@prisma/client";
 import prisma from "@/lib/prisma";
-import { role } from "@/lib/data";
+import { role } from "@/lib/utils";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 
 import Link from "next/link";
@@ -43,8 +43,20 @@ const columns = [
   {
     header: "Дата формирования",
     accessor: "updatedAt",
-    className: `hidden text-center xl:table-cell ${role === "ADMIN" && "border-r border-gray-600"}`,
+    className: `hidden text-center xl:table-cell rounded-tr-md ${
+      (role === "admin" || role === "user") &&
+      "rounded-tr-none border-r border-gray-600"
+    }`,
   },
+  ...(role === "admin" || role === "user"
+    ? [
+        {
+          header: "",
+          accessor: "action",
+          className: "hidden text-center xl:table-cell rounded-tr-md",
+        },
+      ]
+    : []),
 ];
 
 const renderRow = (item: KitList) => (
@@ -68,7 +80,7 @@ const renderRow = (item: KitList) => (
       {item.equipments.map((equip) => equip.name).join(", ")}
     </td>
     <td
-      className={`hidden lg:table-cell text-center ${role === "ADMIN" && "border-r border-gray-600"}`}
+      className={`hidden lg:table-cell text-center ${(role === "admin" || role === "user") && "border-r border-gray-600"}`}
     >
       {new Intl.DateTimeFormat("ru-RU").format(item.updatedAt)}{" "}
       {item.updatedAt.toLocaleTimeString("ru-RU", {
@@ -77,7 +89,7 @@ const renderRow = (item: KitList) => (
         hour12: false,
       })}
     </td>
-    {role === "ADMIN" && (
+    {(role === "admin" || role === "user") && (
       <td>
         <div className="flex items-center justify-center gap-2">
           <Link href={`/list/kits/${item.id}`}>
@@ -139,8 +151,6 @@ const KitListPage = async ({
     prisma.kit.count({ where: query }),
   ]);
 
-  console.log(data);
-
   return (
     <>
       <div className="flex items-center justify-between">
@@ -158,7 +168,9 @@ const KitListPage = async ({
                 <use xlinkHref="/icon.svg#sort" width={20} height={20} />
               </svg>
             </button>
-            {role === "ADMIN" && <FormModal table="user" type="create" />}
+            {(role === "admin" || role === "user") && (
+              <FormModal table="user" type="create" />
+            )}
           </div>
         </div>
       </div>

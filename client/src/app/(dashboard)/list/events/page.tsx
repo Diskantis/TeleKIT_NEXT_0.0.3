@@ -2,7 +2,7 @@ import React from "react";
 
 import { Prisma, Event, Kit, Recipient } from "@prisma/client";
 import prisma from "@/lib/prisma";
-import { role } from "@/lib/data";
+import { role } from "@/lib/utils";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 
 import Link from "next/link";
@@ -63,8 +63,19 @@ const columns = [
   {
     header: "Дата формирования",
     accessor: "updatedAt",
-    className: `hidden text-center xl:table-cell ${role === "ADMIN" && "border-r border-gray-600"}`,
+    className: `hidden text-center xl:table-cell rounded-tr-md ${
+      role === "admin" && "rounded-tr-none border-r border-gray-600"
+    }`,
   },
+  ...(role === "admin"
+    ? [
+        {
+          header: "",
+          accessor: "action",
+          className: "hidden text-center xl:table-cell rounded-tr-md",
+        },
+      ]
+    : []),
 ];
 
 const renderRow = (item: EventList) => (
@@ -108,7 +119,7 @@ const renderRow = (item: EventList) => (
       {item.kits.map((kit) => kit.name).join(", ")}
     </td>
     <td
-      className={`hidden lg:table-cell text-center ${role === "ADMIN" && "border-r border-gray-600"}`}
+      className={`hidden lg:table-cell text-center ${role === "admin" && "border-r border-gray-600"}`}
     >
       {new Intl.DateTimeFormat("ru-RU").format(item.updatedAt)}{" "}
       {item.updatedAt.toLocaleTimeString("ru-RU", {
@@ -117,7 +128,7 @@ const renderRow = (item: EventList) => (
         hour12: false,
       })}
     </td>
-    {role === "ADMIN" && (
+    {role === "admin" && (
       <td>
         <div className="flex items-center justify-center gap-2">
           <Link href={`/schedule/events/${item.id}`}>
@@ -147,7 +158,6 @@ const EventListPage = async ({
   const p = page ? parseInt(page) : 1;
 
   // URL PARAMS CONDITION
-
   const query: Prisma.EventWhereInput = {};
 
   if (queryParams) {
@@ -197,7 +207,7 @@ const EventListPage = async ({
                 <use xlinkHref="/icon.svg#sort" width={20} height={20} />
               </svg>
             </button>
-            {role === "ADMIN" && <FormModal table="user" type="create" />}
+            {role === "admin" && <FormModal table="user" type="create" />}
           </div>
         </div>
       </div>

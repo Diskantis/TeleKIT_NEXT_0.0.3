@@ -2,7 +2,7 @@ import React from "react";
 
 import { Prisma, User } from "@prisma/client";
 import prisma from "@/lib/prisma";
-import { role } from "@/lib/data";
+import { role } from "@/lib/utils";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 
 import Link from "next/link";
@@ -89,9 +89,19 @@ const columns = [
   {
     header: "Дата обновления",
     accessor: "updatedAt",
-    className: `hidden text-center xl:table-cell rounded-tr-md
-     ${role === "ADMIN" && "border-r border-gray-600 rounded-tr-none"}`,
+    className: `hidden text-center xl:table-cell rounded-tr-md ${
+      role === "admin" && "rounded-tr-none border-r border-gray-600"
+    }`,
   },
+  ...(role === "admin"
+    ? [
+        {
+          header: "",
+          accessor: "action",
+          className: "hidden text-center xl:table-cell rounded-tr-md",
+        },
+      ]
+    : []),
 ];
 
 const renderRow = (item: UserList) => (
@@ -147,7 +157,7 @@ const renderRow = (item: UserList) => (
         : "Договор подряда"}
     </td>
     <td className="hidden lg:table-cell text-center border-r border-gray-600">
-      {item.role}
+      {item.role.toUpperCase()}
     </td>
     <td className="hidden lg:table-cell text-center border-r border-gray-600">
       {new Intl.DateTimeFormat("ru-RU").format(item.createdAt)}{" "}
@@ -158,7 +168,7 @@ const renderRow = (item: UserList) => (
       })}
     </td>
     <td
-      className={`hidden lg:table-cell text-center ${role === "ADMIN" && "border-r border-gray-600"}`}
+      className={`hidden lg:table-cell text-center ${role === "admin" && "border-r border-gray-600"}`}
     >
       {new Intl.DateTimeFormat("ru-RU").format(item.updatedAt)}{" "}
       {item.updatedAt.toLocaleTimeString("ru-RU", {
@@ -167,7 +177,7 @@ const renderRow = (item: UserList) => (
         hour12: false,
       })}
     </td>
-    {role === "ADMIN" && (
+    {role === "admin" && (
       <td>
         <div className="flex items-center justify-center gap-2">
           <Link href={`/list/users/${item.id}`}>
@@ -242,7 +252,7 @@ const UserListPage = async ({
                 <use xlinkHref="/icon.svg#sort" width={20} height={20} />
               </svg>
             </button>
-            {role === "ADMIN" && <FormModal table="user" type="create" />}
+            {role === "admin" && <FormModal table="user" type="create" />}
           </div>
         </div>
       </div>

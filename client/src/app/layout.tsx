@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Roboto } from "next/font/google";
 
+import { ClerkProvider } from "@clerk/nextjs";
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -23,14 +25,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={roboto.className}>
-        <div className="h-screen">
-          <Header />
-          {children}
-          <Footer />
-        </div>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={roboto.className}>
+          <div className="h-screen">
+            <Header />
+            {children}
+            <Footer />
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

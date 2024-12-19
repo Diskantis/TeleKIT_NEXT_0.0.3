@@ -1,5 +1,5 @@
-export let role = "ADMIN";
-// export let role = "USER";
+// export let role = "ADMIN";
+export let role = "USER";
 // export let role = "GUEST";
 
 export const userData = [

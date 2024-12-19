@@ -2,7 +2,7 @@ import React from "react";
 
 import { Kit, Prisma, Recipient, RecipientComments } from "@prisma/client";
 import prisma from "@/lib/prisma";
-import { role } from "@/lib/data";
+import { role } from "@/lib/utils";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 
 import Link from "next/link";
@@ -96,14 +96,27 @@ const columns = [
   {
     header: "Дата обновления",
     accessor: "updatedAt",
-    className: "hidden text-center lg:table-cell border-r border-gray-600",
+    className: `hidden text-center xl:table-cell rounded-tr-md ${
+      (role === "admin" || role === "user") &&
+      "rounded-tr-none border-r border-gray-600"
+    }`,
   },
-  {
-    header: "Замечания",
-    accessor: "recipientComments",
-    className: `hidden text-center xl:table-cell rounded-tr-md
-     ${role === "ADMIN" && "border-r border-gray-600 rounded-tr-none"}`,
-  },
+  // {
+  //   header: "Замечания",
+  //   accessor: "recipientComments",
+  //   className: `hidden text-center xl:table-cell rounded-tr-md ${
+  //     (role === "admin" || role === "user") && "rounded-tr-none border-r border-gray-600"
+  //   }`,
+  // },
+  ...(role === "admin" || role === "user"
+    ? [
+        {
+          header: "",
+          accessor: "action",
+          className: "hidden text-center xl:table-cell rounded-tr-md",
+        },
+      ]
+    : []),
 ];
 
 const renderRow = (item: RecipientList) => (
@@ -170,7 +183,8 @@ const renderRow = (item: RecipientList) => (
       })}
     </td>
     <td
-      className={`hidden lg:table-cell text-center ${role === "ADMIN" && "border-r border-gray-600"}`}
+      className={`hidden lg:table-cell text-center 
+      ${(role === "admin" || role === "user") && "border-r border-gray-600"}`}
     >
       {new Intl.DateTimeFormat("ru-RU").format(item.updatedAt)}{" "}
       {item.updatedAt.toLocaleTimeString("ru-RU", {
@@ -179,10 +193,10 @@ const renderRow = (item: RecipientList) => (
         hour12: false,
       })}
     </td>
-    <td className="hidden md:table-cell text-center border-r border-gray-600">
-      {item.recipientComments.map((recipcomm) => recipcomm.comment).join(", ")}
-    </td>
-    {role === "ADMIN" && (
+    {/*<td className="hidden md:table-cell text-center border-r border-gray-600">*/}
+    {/*  {item.recipientComments.map((recipcomm) => recipcomm.comment).join(", ")}*/}
+    {/*</td>*/}
+    {(role === "admin" || role === "user") && (
       <td>
         <div className="flex items-center justify-center gap-2">
           <Link href={`/list/recipients/${item.id}`}>
@@ -261,7 +275,9 @@ const RecipientListPage = async ({
                 <use xlinkHref="/icon.svg#sort" width={20} height={20} />
               </svg>
             </button>
-            {role === "ADMIN" && <FormModal table="recipient" type="create" />}
+            {(role === "admin" || role === "user") && (
+              <FormModal table="recipient" type="create" />
+            )}
           </div>
         </div>
       </div>

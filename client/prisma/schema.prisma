@@ -158,9 +158,9 @@ model EquipmentComments {
 }
 
 enum Role {
-  GUEST
-  USER
-  ADMIN
+  guest
+  user
+  admin
 }
 
 enum StateStatus {

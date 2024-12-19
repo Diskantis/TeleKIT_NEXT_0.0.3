@@ -18,7 +18,7 @@ async function main() {
         position: `Должность${i}`,
         phone: `+37529123456${i}`,
         stateStatus: i % 2 === 0 ? StateStatus.contract : StateStatus.freelance,
-        role: i % 2 === 0 ? Role.GUEST : Role.USER ? Role.ADMIN : Role.GUEST,
+        role: i % 2 === 0 ? Role.guest : Role.user ? Role.admin : Role.guest,
         // img: "/Michel.jpg",
         img: `https://images.pexels.com/photos/936${i}26/pexels-photo-936${i}26.jpeg?auto=compress&cs=tinysrgb&w=1200`,
       },
