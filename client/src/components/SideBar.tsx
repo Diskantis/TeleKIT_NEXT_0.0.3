@@ -1,13 +1,26 @@
 import React from "react";
 
 import { currentUser } from "@clerk/nextjs/server";
+import { role } from "@/lib/utils";
 import Link from "next/link";
 
 const menu = [
   {
+    icon: "/icon.svg#home",
+    label: "Главная",
+    href: `/${role}`,
+    visible: ["admin", "user", "guest"],
+  },
+  {
     icon: "/icon.svg#calendar",
     label: "Расписание",
     href: "/list/events",
+    visible: ["admin", "user", "guest"],
+  },
+  {
+    icon: "/icon.svg#calendar",
+    label: "Календарь",
+    href: "/calendar",
     visible: ["admin", "user", "guest"],
   },
   {
@@ -32,12 +45,6 @@ const menu = [
     icon: "/icon.svg#people",
     label: "Пользователи",
     href: "/list/users",
-    visible: ["admin"],
-  },
-  {
-    icon: "/icon.svg#people",
-    label: "Админ панель",
-    href: "/admin",
     visible: ["admin"],
   },
 ];
@@ -84,7 +91,6 @@ const SideBar = async () => {
           <Link
             href="/"
             className="2xl:flex items-center justify-center lg:justify-start text-gray-200"
-            // onClick={() => setPath("/")}
           >
             <svg className="w-6 h-5 mr-2 hiddenjustify-center fill-gray-300 xs:flex lg:hidden 2xl:flex">
               <use xlinkHref="/icon.svg#logout" width={20} height={20} />

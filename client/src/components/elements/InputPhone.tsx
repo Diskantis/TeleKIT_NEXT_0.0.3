@@ -4,11 +4,6 @@ import { FieldError, Noop } from "react-hook-form";
 import PhoneInput from "react-phone-input-2";
 
 type InputFieldProps = {
-  // label: string;
-  // type?: string;
-  // size?: string;
-  // name: string;
-
   field: {
     name: "phone";
     onChange: (...event: any[]) => void;

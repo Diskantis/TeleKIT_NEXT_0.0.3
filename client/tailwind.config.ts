@@ -20,6 +20,7 @@ export default {
       },
       colors: {
         yellow: "#fdba74",
+        def: "#155e75",
       },
     },
   },

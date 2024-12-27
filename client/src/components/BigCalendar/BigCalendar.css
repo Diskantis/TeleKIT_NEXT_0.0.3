@@ -1,0 +1,117 @@
+.rbc-calendar {
+  height: calc(100vh - 176px);
+  background-color: #374151 !important;
+  border-radius: 6px !important;
+  font-family: "Roboto", sans-serif !important;
+  padding: 16px 8px;
+}
+.rbc-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  font-size: 16px;
+
+  border-bottom: none;
+}
+.rbc-allday-cell {
+  display: none;
+}
+
+.rbc-month-header {
+  background-color: #083344;
+  border-bottom: 1px solid;
+  border-radius: 4px 4px 0 0;
+}
+.rbc-time-header.rbc-overflowing {
+  background-color: #083344;
+  border-bottom: 1px solid;
+  border-right: 0 solid;
+  border-radius: 4px 4px 0 0;
+  padding-right: 7px;
+  margin-right: 0 !important;
+}
+
+.rbc-month-view {
+  background-color: #1f2937;
+  border-radius: 4px;
+}
+.rbc-day-bg.rbc-off-range-bg {
+  background-color: #1f2937;
+}
+.rbc-button-link.rbc-show-more {
+  width: 100%;
+  background-color: transparent;
+}
+
+/*DAY*/
+.rbc-today {
+  background-color: #374151;
+}
+.rbc-time-view {
+  background-color: #1f2937;
+  border-radius: 4px;
+}
+.rbc-time-content {
+  border-top: 0;
+}
+.rbc-day-slot.rbc-time-column:last-child {
+  border-right: 1px solid #e5e7eb;
+}
+.rbc-timeslot-group {
+  align-items: center;
+}
+
+/*TOOLBAR*/
+.rbc-toolbar-label {
+  font-weight: 600;
+}
+.rbc-toolbar-label::first-letter {
+  text-transform: uppercase !important;
+}
+.rbc-toolbar .rbc-btn-group button {
+  color: #f3f4f6 !important;
+  background-color: #1f2937;
+  &:hover {
+    background-color: #164e63 !important;
+  }
+  &.rbc-active {
+    background-color: #083344 !important;
+  }
+}
+.rbc-btn-group:first-child {
+  display: flex;
+  & button:first-child {
+    order: 3;
+    margin-left: 10px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+  & button:nth-child(2) {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+}
+
+/*SCROLL BAR*/
+.rbc-time-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.rbc-time-content::-webkit-scrollbar-track {
+  display: flex;
+  justify-content: center;
+  border-radius: 0 0 4px 0;
+  background: #656565;
+  margin-left: 10px;
+}
+
+.rbc-time-content::-webkit-scrollbar-thumb {
+  background: #e0cbcb;
+  border-radius: 100vh;
+  border: 3px solid #f6f7ed;
+}
+
+.rbc-time-content::-webkit-scrollbar-thumb:hover {
+  background: #c0a0b9;
+}

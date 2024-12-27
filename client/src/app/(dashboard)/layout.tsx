@@ -21,11 +21,7 @@ export default function DashboardLayout({
           </div>
         </div>
         {/*RIGHT*/}
-        <div className="w-[88%] sm:w-[87%] lg:w-[88%]">
-          <div className="h-full flex flex-col justify-between bg-gray-900 mr-4 p-4 rounded-md">
-            {children}
-          </div>
-        </div>
+        <div className="w-[88%] sm:w-[87%] lg:w-[88%]">{children}</div>
       </div>
     </>
   );

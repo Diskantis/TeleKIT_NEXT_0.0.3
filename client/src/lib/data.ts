@@ -1,6 +1,6 @@
-// export let role = "ADMIN";
-export let role = "USER";
-// export let role = "GUEST";
+// export let role = "admin";
+// export let role = "user";
+// export let role = "guest";
 
 export const userData = [
   {
@@ -494,4 +494,104 @@ export const recipientData = [
   //   role: "GUEST",
   //   createdAt: "2024-06-21 11:05:76",
   // },
+];
+export const eventsData = [
+  {
+    id: 1,
+    title: "Math",
+    allDay: false,
+    start: new Date(2024, 11, 20, 8, 0),
+    end: new Date(2024, 11, 20, 8, 45),
+  },
+  {
+    id: 2,
+    title: "English",
+    allDay: false,
+    start: new Date(2024, 11, 20, 9, 0),
+    end: new Date(2024, 11, 20, 9, 45),
+  },
+  {
+    id: 3,
+    title: "Biology",
+    allDay: false,
+    start: new Date(2024, 11, 20, 10, 0),
+    end: new Date(2024, 11, 20, 10, 45),
+  },
+  {
+    id: 4,
+    title: "Physics",
+    allDay: false,
+    start: new Date(2024, 11, 21, 11, 0),
+    end: new Date(2024, 11, 21, 11, 45),
+  },
+  {
+    id: 5,
+    title: "Chemistry",
+    allDay: false,
+    start: new Date(2024, 11, 21, 12, 0),
+    end: new Date(2024, 11, 22, 17, 45),
+  },
+  {
+    id: 6,
+    title: "Math",
+    allDay: false,
+    start: new Date(2024, 11, 21, 13, 0),
+    end: new Date(2024, 11, 21, 13, 45),
+  },
+  {
+    id: 7,
+    title: "English",
+    allDay: false,
+    start: new Date(2024, 11, 22, 14, 0),
+    end: new Date(2024, 11, 22, 14, 45),
+  },
+  {
+    id: 8,
+    title: "Biology",
+    allDay: false,
+    start: new Date(2024, 11, 22, 15, 0),
+    end: new Date(2024, 11, 22, 15, 45),
+  },
+  {
+    id: 9,
+    title: "Physics",
+    allDay: false,
+    start: new Date(2024, 11, 22, 16, 0),
+    end: new Date(2024, 11, 22, 16, 45),
+  },
+  {
+    id: 10,
+    title: "Chemistry",
+    allDay: false,
+    start: new Date(2024, 11, 23, 17, 0),
+    end: new Date(2024, 11, 23, 17, 45),
+  },
+  {
+    id: 11,
+    title: "English",
+    allDay: false,
+    start: new Date(2024, 11, 22, 14, 0),
+    end: new Date(2024, 11, 22, 14, 45),
+  },
+  {
+    id: 12,
+    title: "Biology",
+    allDay: false,
+    start: new Date(2024, 11, 22, 15, 0),
+    end: new Date(2024, 11, 22, 15, 45),
+  },
+  {
+    id: 13,
+    title: "Physics",
+    allDay: false,
+    start: new Date(2024, 11, 22, 16, 0),
+    end: new Date(2024, 11, 22, 16, 45),
+  },
+  {
+    id: 14,
+    title: "Chemistry",
+    allDay: false,
+    start: new Date(2024, 11, 23, 17, 0),
+    end: new Date(2024, 11, 23, 17, 45),
+  },
 ];

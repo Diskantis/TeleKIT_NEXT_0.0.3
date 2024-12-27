@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
+import { UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 
 const Header = async () => {
   const user = await currentUser();
@@ -27,7 +27,9 @@ const Header = async () => {
               ? "администратор"
               : (user?.publicMetadata?.role as string) === "user"
                 ? "пользователь"
-                : "гость"}
+                : (user?.publicMetadata?.role as string) === "guest"
+                  ? "гость"
+                  : ""}
           </span>
         </div>
         <UserButton />

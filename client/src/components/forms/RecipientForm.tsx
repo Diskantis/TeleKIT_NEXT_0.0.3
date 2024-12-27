@@ -5,7 +5,7 @@ import React from "react";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import InputField from "@/components/InputField";
+import InputField from "@/components/elements/InputField";
 import PhoneInput from "react-phone-input-2";
 
 // const phoneRegex = new RegExp(
@@ -60,7 +60,7 @@ const RecipientForm = ({
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    // console.log(data);
   });
 
   const formName =

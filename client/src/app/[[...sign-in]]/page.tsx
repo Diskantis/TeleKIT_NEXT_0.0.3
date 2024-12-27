@@ -2,12 +2,13 @@
 
 import * as Clerk from "@clerk/elements/common";
 import * as SignIn from "@clerk/elements/sign-in";
+
 import { useUser } from "@clerk/nextjs";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
-  const { isLoaded, isSignedIn, user } = useUser();
+  const { user } = useUser();
   const router = useRouter();
 
   useEffect(() => {
@@ -64,7 +65,7 @@ const LoginPage = () => {
                 <Clerk.GlobalError className="text-sm text-red-400" />
                 <Clerk.Field name="identifier" className="flex flex-col gap-2">
                   <Clerk.Label className="text-xs text-gray-500">
-                    Username
+                    Имя пользователя
                   </Clerk.Label>
                   <Clerk.Input
                     type="text"

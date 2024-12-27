@@ -1,9 +1,12 @@
 import React from "react";
 
-import ModerCalendar from "@/components/ModerCalendar/ModerCalendar";
-import EventList from "@/components/EventList/EventList";
+import EventCalendar from "@/components/EventCalendar/EventCalendar";
+import BigCalendar from "@/components/BigCalendar/BigCalendar";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import "@/components/EventCalendar/EventCalendar.css";
+import "@/components/BigCalendar/BigCalendar.css";
 
-const UserPage = () => {
+const CalendarPage = () => {
   return (
     <div className="h-full flex flex-col bg-gray-900 mr-4 p-4 rounded-md">
       <div className="flex gap-4 flex-col xl:flex-row">
@@ -12,15 +15,15 @@ const UserPage = () => {
           <h1 className="hidden md:block text-2xl font-semibold pb-4">
             Страница пользователя
           </h1>
-          <ModerCalendar />
+          <BigCalendar />
         </div>
         {/*RIGHT*/}
         <div className="w-full xl:w-1/4 flex flex-col gap-4">
-          <EventList />
+          <EventCalendar />
         </div>
       </div>
     </div>
   );
 };
 
-export default UserPage;
+export default CalendarPage;
