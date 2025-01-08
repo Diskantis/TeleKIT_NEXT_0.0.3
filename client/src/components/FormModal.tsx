@@ -5,14 +5,12 @@ import dynamic from "next/dynamic";
 import { Spin } from "antd";
 
 const UserForm = dynamic(() => import("@/components/forms/UserForm"), {
-  // loading: () => <h1>Loading...</h1>,
   loading: () => <Spin fullscreen />,
 });
 
 const RecipientForm = dynamic(
   () => import("@/components/forms/RecipientForm"),
   {
-    // loading: () => <h1>Loading...</h1>,
     loading: () => <Spin fullscreen />,
   },
 );

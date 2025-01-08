@@ -90,6 +90,7 @@ seed.ts
         process.exit(1)
       })
 
+npx prisma db push --force-reset - сброс базы данных
 npx prisma db seed - заполнение базы данных из файла seed.ts
 npx prisma migrate reset
 npx prisma migrate dev

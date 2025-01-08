@@ -1,4 +1,4 @@
-import { PrismaClient, StateStatus, Role, Day, $Enums } from "@prisma/client";
+import { PrismaClient, StateStatus, Role, $Enums } from "@prisma/client";
 import StatusEmployment = $Enums.StatusEmployment;
 
 const prisma = new PrismaClient();
@@ -26,19 +26,12 @@ async function main() {
   }
 
   // EVENT
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= 10; i++) {
     await prisma.event.create({
       data: {
         title: `Event ${i}`,
-        day: Day[
-          Object.keys(Day)[
-            Math.floor(Math.random() * Object.keys(Day).length)
-          ] as keyof typeof Day
-        ],
-        startDate: new Date(new Date().setDate(new Date().getDate() + i)),
-        endDate: new Date(new Date().setDate(new Date().getDate() + i + 1)),
-        startTime: new Date(new Date().setHours(new Date().getHours() + i + 1)),
-        endTime: new Date(new Date().setHours(new Date().getHours() + i + 2)),
+        start: new Date(2024, 11, 25 + i, i, 20 + i),
+        end: new Date(2024, 11, 25 + i, i + 1, 30 + i),
       },
     });
   }

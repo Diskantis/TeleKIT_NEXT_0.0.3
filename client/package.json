@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "npm run open-browser && next dev --port 3050",
     "open-browser": "start http://localhost:3050",
+    "json": "json-server --port 3055 --watch db.json",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -15,6 +16,7 @@
     "@hookform/resolvers": "^3.9.1",
     "@prisma/client": "^6.0.1",
     "antd": "^5.22.4",
+    "json-server": "^1.0.0-beta.3",
     "moment": "^2.30.1",
     "next": "15.0.3",
     "prisma": "^6.0.1",

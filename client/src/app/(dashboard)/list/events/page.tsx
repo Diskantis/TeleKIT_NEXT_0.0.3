@@ -26,11 +26,6 @@ const columns = [
     className: `hidden pl-2 md:table-cell border-r border-gray-600`,
   },
   {
-    header: "День",
-    accessor: "day",
-    className: `hidden pl-2 md:table-cell border-r border-gray-600`,
-  },
-  {
     header: "Дата начала",
     accessor: "startDate",
     className: `hidden text-center pl-2 md:table-cell border-r border-gray-600`,
@@ -89,24 +84,21 @@ const renderRow = (item: EventList) => (
     <td className="hidden pl-2 md:table-cell border-r border-gray-600">
       {item.title}
     </td>
-    <td className="hidden pl-2 md:table-cell border-r border-gray-600">
-      {item.day}
+    <td className="hidden pl-2 md:table-cell text-center border-r border-gray-600">
+      {new Intl.DateTimeFormat("ru-RU").format(item.start)}
     </td>
     <td className="hidden pl-2 md:table-cell text-center border-r border-gray-600">
-      {new Intl.DateTimeFormat("ru-RU").format(item.startDate)}
-    </td>
-    <td className="hidden pl-2 md:table-cell text-center border-r border-gray-600">
-      {item.startTime.toLocaleTimeString("ru-RU", {
+      {item.start.toLocaleTimeString("ru-RU", {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
       })}
     </td>
     <td className="hidden pl-2 md:table-cell text-center border-r border-gray-600">
-      {new Intl.DateTimeFormat("ru-RU").format(item.endDate)}
+      {new Intl.DateTimeFormat("ru-RU").format(item.end)}
     </td>
     <td className="hidden pl-2 md:table-cell text-center border-r border-gray-600">
-      {item.endTime.toLocaleTimeString("ru-RU", {
+      {item.end.toLocaleTimeString("ru-RU", {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,

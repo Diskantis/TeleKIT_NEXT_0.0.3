@@ -8,16 +8,21 @@ import GridMonthCalendar from "@/components/ModerCalendar/GridMonthCalendar";
 import GridWeekCalendar from "@/components/ModerCalendar/GridWeekCalendar";
 import GridDayCalendar from "@/components/ModerCalendar/GridDayCalendar";
 
-const ModerCalendar = () => {
+const ModerCalendar = ({
+  data,
+}: {
+  data: { title: string; start: Date; end: Date }[];
+}) => {
   moment.updateLocale("ru", { week: { dow: 1 } });
   moment().locale("ru");
 
   const [toDay, setToDay] = useState(moment());
-  const [mode, setMode] = useState("week");
+  const [mode, setMode] = useState("week"); //"month" "week" "day"
 
   const firstDay = toDay.clone().startOf("week");
   const lastDay = toDay.clone().endOf("week");
 
+  const handleToDay = () => setToDay(moment());
   const handlePrev = () => {
     if (mode === "month") {
       setToDay((prev) => prev.clone().subtract(1, "month"));
@@ -36,7 +41,6 @@ const ModerCalendar = () => {
       setToDay((prev) => prev.clone().add(1, "day"));
     }
   };
-  const handleToDay = () => setToDay(moment());
 
   let label = "";
   switch (mode) {
@@ -107,11 +111,11 @@ const ModerCalendar = () => {
       </div>
       {/*GRID CALENDAR*/}
       {mode === "month" ? (
-        <GridMonthCalendar today={toDay} />
+        <GridMonthCalendar today={toDay} data={data} />
       ) : mode === "week" ? (
-        <GridWeekCalendar today={toDay} />
+        <GridWeekCalendar today={toDay} data={data} />
       ) : mode === "day" ? (
-        <GridDayCalendar today={toDay} />
+        <GridDayCalendar today={toDay} data={data} />
       ) : null}
     </div>
   );
