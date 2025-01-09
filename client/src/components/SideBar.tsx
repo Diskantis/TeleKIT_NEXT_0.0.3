@@ -1,57 +1,56 @@
 import React from "react";
 
 import { currentUser } from "@clerk/nextjs/server";
-import { role } from "@/lib/utils";
 import Link from "next/link";
-
-const menu = [
-  {
-    icon: "/icon.svg#home",
-    label: "Главная",
-    href: `/${role}`,
-    visible: ["admin", "user", "guest"],
-  },
-  {
-    icon: "/icon.svg#calendar",
-    label: "Расписание",
-    href: "/list/events",
-    visible: ["admin", "user", "guest"],
-  },
-  {
-    icon: "/icon.svg#calendar",
-    label: "Календарь",
-    href: "/calendar",
-    visible: ["admin", "user", "guest"],
-  },
-  {
-    icon: "/icon.svg#kit",
-    label: "Комплекты",
-    href: "/list/kits",
-    visible: ["admin", "user"],
-  },
-  {
-    icon: "/icon.svg#camera",
-    label: "Оборудование",
-    href: "/list/equipments",
-    visible: ["admin", "user"],
-  },
-  {
-    icon: "/icon.svg#people",
-    label: "Получатели",
-    href: "/list/recipients",
-    visible: ["admin", "user"],
-  },
-  {
-    icon: "/icon.svg#people",
-    label: "Пользователи",
-    href: "/list/users",
-    visible: ["admin"],
-  },
-];
 
 const SideBar = async () => {
   const user = await currentUser();
   const role = user?.publicMetadata.role as string;
+
+  const menu = [
+    {
+      icon: "/icon.svg#home",
+      label: "Главная",
+      href: `/${role}`,
+      visible: ["admin", "user", "guest"],
+    },
+    {
+      icon: "/icon.svg#calendar",
+      label: "Расписание",
+      href: "/list/events",
+      visible: ["admin", "user", "guest"],
+    },
+    {
+      icon: "/icon.svg#calendar",
+      label: "Календарь",
+      href: "/calendar",
+      visible: ["admin", "user", "guest"],
+    },
+    {
+      icon: "/icon.svg#kit",
+      label: "Комплекты",
+      href: "/list/kits",
+      visible: ["admin", "user"],
+    },
+    {
+      icon: "/icon.svg#camera",
+      label: "Оборудование",
+      href: "/list/equipments",
+      visible: ["admin", "user"],
+    },
+    {
+      icon: "/icon.svg#people",
+      label: "Получатели",
+      href: "/list/recipients",
+      visible: ["admin", "user"],
+    },
+    {
+      icon: "/icon.svg#people",
+      label: "Пользователи",
+      href: "/list/users",
+      visible: ["admin"],
+    },
+  ];
 
   return (
     <div className="flex flex-col gap-2 mt-6">

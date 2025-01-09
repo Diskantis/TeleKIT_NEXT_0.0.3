@@ -1,6 +1,6 @@
+import Link from "next/link";
 import { currentUser } from "@clerk/nextjs/server";
 import { UserButton } from "@clerk/nextjs";
-import Link from "next/link";
 
 const Header = async () => {
   const user = await currentUser();
