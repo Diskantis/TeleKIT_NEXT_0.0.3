@@ -21,12 +21,6 @@ const SideBar = async () => {
       visible: ["admin", "user", "guest"],
     },
     {
-      icon: "/icon.svg#calendar",
-      label: "Календарь",
-      href: "/calendar",
-      visible: ["admin", "user", "guest"],
-    },
-    {
       icon: "/icon.svg#kit",
       label: "Комплекты",
       href: "/list/kits",

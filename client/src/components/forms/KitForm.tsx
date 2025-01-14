@@ -1,21 +1,21 @@
 "use client";
 
 import React, {
+  useEffect,
+  useActionState,
   Dispatch,
   startTransition,
-  useActionState,
-  useEffect,
 } from "react";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputField from "@/components/elements/InputField";
-import { EventSchema, eventSchema } from "@/lib/formValidationSchemas";
-import { createEvent, updateEvent } from "@/lib/actions/actionsEvent";
-import { useRouter } from "next/navigation";
+import { kitSchema, KitSchema } from "@/lib/formValidationSchemas";
+import { createKit, updateKit } from "@/lib/actions/actionsKit";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
-const EventForm = ({
+const KitForm = ({
   type,
   data,
   setOpen,
@@ -30,12 +30,13 @@ const EventForm = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<EventSchema>({
-    resolver: zodResolver(eventSchema),
+  } = useForm<KitSchema>({
+    resolver: zodResolver(kitSchema),
   });
 
   const [state, formAction] = useActionState(
-    type === "create" ? createEvent : updateEvent,
+    // createKit,
+    type === "create" ? createKit : updateKit,
     {
       success: false,
       error: false,
@@ -51,7 +52,7 @@ const EventForm = ({
   useEffect(() => {
     if (state.success) {
       toast(
-        `${type === "create" ? "Создание нового события" : "Изменение события"} успешно!`,
+        `${type === "create" ? "Создание нового комплекта" : "Изменение комплекта"} успешно!`,
       );
       setOpen(false);
       router.refresh();
@@ -64,18 +65,29 @@ const EventForm = ({
     <form className="flex flex-col gap-4" onSubmit={onSubmit}>
       <h1 className="text-2xl text-slate-300 font-semibold">
         {type === "create"
-          ? "Создание нового события"
-          : "Редактирование данных события"}
+          ? "Создание нового комплекта"
+          : "Изменение комплекта"}
       </h1>
       <div className="flex justify-between flex-wrap gap-2">
         <InputField
           label="Название"
-          name="title"
+          name="name"
           size="w-[360px]"
           register={register}
-          defaultValue={data?.title}
-          error={errors?.title}
+          defaultValue={data?.name}
+          error={errors?.name}
         />
+        {data && (
+          <InputField
+            label="Id"
+            name="id"
+            size="w-[360px]"
+            register={register}
+            defaultValue={data?.id}
+            error={errors?.id}
+            hidden
+          />
+        )}
         <div className="flex flex-col gap-2 w-[360px]">
           <label className="text-sm text-gray-500">Получатель</label>
           <select
@@ -108,57 +120,10 @@ const EventForm = ({
             </p>
           )}
         </div>
-        <InputField
-          label="Дата начала"
-          name="start"
-          type="date"
-          size="w-[360px]"
-          padding="py-[7px]"
-          register={register}
-          defaultValue={data?.start}
-          error={errors?.start}
-        />
-        <InputField
-          label="Дата окончания"
-          name="end"
-          type="date"
-          size="w-[360px]"
-          padding="py-[7px]"
-          register={register}
-          defaultValue={data?.end}
-          error={errors?.end}
-        />
-        <InputField
-          label="Время начала"
-          name="start"
-          type="time"
-          size="w-[360px]"
-          padding="py-[7px]"
-          register={register}
-          defaultValue={data?.start}
-          error={errors?.start}
-        />
-        <InputField
-          label="Время окончания"
-          name="end"
-          type="time"
-          size="w-[360px]"
-          padding="py-[7px]"
-          register={register}
-          defaultValue={data?.end}
-          error={errors?.end}
-        />
-        {/*<InputField*/}
-        {/*  label="Дата начала"*/}
-        {/*  name="start"*/}
-        {/*  type="datetime-local"*/}
-        {/*  size="w-[360px]"*/}
-        {/*  padding="py-[7px]"*/}
-        {/*  register={register}*/}
-        {/*  defaultValue={data?.start}*/}
-        {/*  error={errors?.start}*/}
-        {/*/>*/}
       </div>
+      {state.error && (
+        <span className="text-red-500">Что-то пошло не так!</span>
+      )}
       <button className="bg-blue-400 text-white mt-2 p-2 rounded-md">
         {type === "create" ? "Создать" : "Обновить"}
       </button>
@@ -166,4 +131,4 @@ const EventForm = ({
   );
 };
 
-export default EventForm;
+export default KitForm;

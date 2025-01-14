@@ -8,6 +8,8 @@ import "./globals.css";
 import { Roboto } from "next/font/google";
 
 import { ClerkProvider } from "@clerk/nextjs";
+import { ToastContainer } from "react-toastify";
+// import 'react-toastify/dist/ReactToastify.css'
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -18,7 +20,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "TeleKIT NEXT",
+  title: "TeleKIT NEXT 0.0.3",
   description: "Телевизионный журналистский комплект",
 };
 
@@ -33,7 +35,7 @@ export default function RootLayout({
         <body className={roboto.className}>
           <div className="h-screen">
             <Header />
-            {children}
+            {children} <ToastContainer position="bottom-right" theme="dark" />
             <Footer />
           </div>
         </body>

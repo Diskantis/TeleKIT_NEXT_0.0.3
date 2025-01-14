@@ -113,7 +113,7 @@ const columns = [
 const renderRow = (item: EquipmentList) => (
   <tr
     key={item.id}
-    className="border-b border-gray-200 text-sm text-gray-300 hover:bg-[#08334468]"
+    className="h-[35px] border-b border-gray-200 text-sm text-gray-300 hover:bg-[#08334468]"
   >
     <td className="hidden md:table-cell text-center border-r border-gray-600">
       {item.id}

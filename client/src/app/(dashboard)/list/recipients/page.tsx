@@ -124,7 +124,7 @@ const renderRow = (item: RecipientList) => (
     key={item.username}
     className="border-b border-gray-200 text-sm text-gray-300 hover:bg-[#08334468]"
   >
-    <td className="hidden md:table-cell text-center border-r border-gray-600">
+    <td className="h-[35px] hidden md:table-cell text-center border-r border-gray-600">
       {item.id}
     </td>
     <td className="hidden lg:flex items-center md:justify-center md:gap-4 py-1 border-r border-gray-600">

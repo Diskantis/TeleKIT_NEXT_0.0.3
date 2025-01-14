@@ -27,22 +27,23 @@ model User {
 }
 
 model Recipient {
-  id                Int                 @id @default(autoincrement())
-  username          String              @unique
-  lastName          String
-  firstName         String
-  surName           String?
-  department        String?
-  position          String
-  stateStatus       StateStatus
-  stateStartDate    DateTime
-  stateEndDate      DateTime
-  phone             String?             @unique
-  img               String?
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  eventId           Int?
-  event             Event?              @relation(fields: [eventId], references: [id])
+  id             Int         @id @default(autoincrement())
+  username       String      @unique
+  lastName       String
+  firstName      String
+  surName        String?
+  department     String?
+  position       String
+  stateStatus    StateStatus
+  stateStartDate DateTime
+  stateEndDate   DateTime
+  phone          String?     @unique
+  img            String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  eventId        Int?
+  event          Event?      @relation(fields: [eventId], references: [id])
+
   kits              Kit[]
   recipientComments RecipientComments[]
 }
@@ -69,15 +70,14 @@ model Event {
 }
 
 model Kit {
-  id          Int         @id @default(autoincrement())
-  name        String      @unique
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  eventId     Int?
-  event       Event?      @relation(fields: [eventId], references: [id])
-  recipientId Int?
-  recipient   Recipient?  @relation(fields: [recipientId], references: [id])
-  equipments  Equipment[]
+  id         Int         @id @default(autoincrement())
+  name       String      @unique
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  eventId    Int?
+  event      Event?      @relation(fields: [eventId], references: [id])
+  recipients Recipient[]
+  equipments Equipment[]
 }
 
 model Category {

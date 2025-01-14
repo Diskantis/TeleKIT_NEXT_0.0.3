@@ -74,7 +74,6 @@ async function main() {
       data: {
         name: `Kit Number ${i}`,
         eventId: (i % 5) + 1,
-        recipientId: (i % 5) + 1,
       },
     });
   }

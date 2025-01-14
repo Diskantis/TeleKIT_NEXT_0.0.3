@@ -1,18 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { Dispatch } from "react";
 
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputField from "@/components/elements/InputField";
 import PhoneInput from "react-phone-input-2";
-
-// const phoneRegex = new RegExp(
-//   // /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
-//   /\+375 \(\d{2}\) \d{3} \d{2} \d{2}/,
-//   // /\+375\s?\(\d{2}\)\s?\d{3}[-\s]?\d{2}[-\s]?\d{2}/,
-// );
 
 const schema = z.object({
   username: z
@@ -46,9 +40,13 @@ type Inputs = z.infer<typeof schema>;
 const RecipientForm = ({
   type,
   data,
+  setOpen,
+  relatedData,
 }: {
   type: "create" | "update";
   data?: any;
+  setOpen: Dispatch<React.SetStateAction<boolean>>;
+  relatedData?: any;
 }) => {
   const {
     control,
@@ -63,14 +61,13 @@ const RecipientForm = ({
     console.log(data);
   });
 
-  const formName =
-    type === "create"
-      ? "Создание нового получателя"
-      : "Редактирование данных получателя";
-
   return (
     <form className="flex flex-col" onSubmit={onSubmit}>
-      <h1 className="text-2xl text-slate-300 font-semibold">{formName}</h1>
+      <h1 className="text-2xl text-slate-300 font-semibold">
+        {type === "create"
+          ? "Создание нового получателя"
+          : "Редактирование данных получателя"}
+      </h1>
       <span className="pt-4 pb-2 text-lg text-gray-400 font-medium">
         Регистрационная информация
       </span>

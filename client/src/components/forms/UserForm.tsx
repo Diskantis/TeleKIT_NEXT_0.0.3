@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Dispatch } from "react";
 
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
@@ -46,9 +46,13 @@ type Inputs = z.infer<typeof schema>;
 const UserForm = ({
   type,
   data,
+  setOpen,
+  relatedData,
 }: {
   type: "create" | "update";
   data?: any;
+  setOpen: Dispatch<React.SetStateAction<boolean>>;
+  relatedData?: any;
 }) => {
   const {
     control,
@@ -60,17 +64,16 @@ const UserForm = ({
   });
 
   const onSubmit = handleSubmit((data) => {
-    // console.log(data);
+    console.log(data);
   });
-
-  const formName =
-    type === "create"
-      ? "Создание нового пользователя"
-      : "Редактирование данных пользователя";
 
   return (
     <form className="flex flex-col" onSubmit={onSubmit}>
-      <h1 className="text-2xl text-slate-300 font-semibold">{formName}</h1>
+      <h1 className="text-2xl text-slate-300 font-semibold">
+        {type === "create"
+          ? "Создание нового пользователя"
+          : "Редактирование данных пользователя"}
+      </h1>
       <span className="pt-4 pb-2 text-lg text-gray-400 font-medium">
         Регистрационная информация
       </span>

@@ -1,25 +1,84 @@
 "use client";
 
-import React, { useState } from "react";
+import React, {
+  Dispatch,
+  JSX,
+  useActionState,
+  useEffect,
+  useState,
+} from "react";
 import dynamic from "next/dynamic";
 import { Spin } from "antd";
+import { deleteKit } from "@/lib/actions/actionsKit";
+import { deleteEvent } from "@/lib/actions/actionsEvent";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { FormContainerProps } from "@/components/FormContainer";
 
+const deleteActionMap = {
+  kit: deleteKit,
+  user: deleteKit,
+  recipient: deleteKit,
+  event: deleteEvent,
+};
+
+// USE LAZY LOADING (DYNAMIC IMPORT FORM)
 const UserForm = dynamic(() => import("@/components/forms/UserForm"), {
   loading: () => <Spin fullscreen />,
 });
-
 const RecipientForm = dynamic(
   () => import("@/components/forms/RecipientForm"),
   {
     loading: () => <Spin fullscreen />,
   },
 );
+const EventForm = dynamic(() => import("@/components/forms/EventForm"), {
+  loading: () => <Spin fullscreen />,
+});
+const KitForm = dynamic(() => import("@/components/forms/KitForm"), {
+  loading: () => <Spin fullscreen />,
+});
 
 const forms: {
-  [key: string]: (type: "create" | "update", data?: any) => JSX.Element;
+  [key: string]: (
+    setOpen: Dispatch<React.SetStateAction<boolean>>,
+    type: "create" | "update",
+    data?: any,
+    relatedData?: any,
+  ) => JSX.Element;
 } = {
-  user: (type, data) => <UserForm type={type} data={data} />,
-  recipient: (type, data) => <RecipientForm type={type} data={data} />,
+  kit: (setOpen, type, data, relatedData) => (
+    <KitForm
+      type={type}
+      data={data}
+      setOpen={setOpen}
+      relatedData={relatedData}
+    />
+  ),
+  event: (setOpen, type, data, relatedData) => (
+    <EventForm
+      type={type}
+      data={data}
+      setOpen={setOpen}
+      relatedData={relatedData}
+    />
+  ),
+  user: (setOpen, type, data, relatedData) => (
+    <UserForm
+      type={type}
+      data={data}
+      setOpen={setOpen}
+      relatedData={relatedData}
+    />
+  ),
+  recipient: (setOpen, type, data, relatedData) => (
+    <RecipientForm
+      type={type}
+      data={data}
+      setOpen={setOpen}
+      relatedData={relatedData}
+    />
+  ),
 };
 
 const FormModal = ({
@@ -27,13 +86,24 @@ const FormModal = ({
   type,
   data,
   id,
-}: {
-  table: "user" | "recipient";
-  type: "create" | "update" | "delete";
-  data?: any;
-  id?: number | string;
-}) => {
-  const tableName = table === "user" ? "пользователя" : "получателя";
+  relatedData,
+}: FormContainerProps & { relatedData?: any }) => {
+  let tableName = "";
+
+  switch (table) {
+    case "user":
+      tableName = "этого пользователя";
+      break;
+    case "recipient":
+      tableName = "этого получателя";
+      break;
+    case "kit":
+      tableName = "этот комплект";
+      break;
+    default:
+      break;
+  }
+
   const sizeIcon = type === "create" ? "32" : "20";
 
   const bgColor =
@@ -53,26 +123,36 @@ const FormModal = ({
   const [open, setOpen] = useState(false);
 
   const Form = () => {
+    const [state, formAction] = useActionState(deleteActionMap[table], {
+      success: false,
+      error: false,
+    });
+
+    const router = useRouter();
+
+    useEffect(() => {
+      if (state.success) {
+        toast("Комплект удален успешно!");
+        setOpen(false);
+        router.refresh();
+      }
+    }, [state]);
+
     return type === "delete" && id ? (
-      <form action="" className="p-4 flex flex-col gap-4">
+      <form action={formAction} className="p-4 flex flex-col gap-4">
+        <input type="text | number" name="id" value={id} hidden readOnly />
         <span className="text-center font-medium">
-          Все данные будут потеряны. Вы действительно хотите удалить этого{" "}
-          {tableName}?
+          Все данные будут потеряны. Вы действительно хотите удалить {tableName}
+          ?
         </span>
         <div className="flex gap-4 items-center justify-center">
           <button className="bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center">
             Удалить
           </button>
-          <button
-            className="bg-blue-700 text-white py-2 px-4 rounded-md border-none w-max self-center"
-            onClick={() => setOpen(false)}
-          >
-            Отмена
-          </button>
         </div>
       </form>
     ) : type === "create" || type === "update" ? (
-      forms[table](type, data)
+      forms[table](setOpen, type, data, relatedData)
     ) : (
       "Form not found!"
     );

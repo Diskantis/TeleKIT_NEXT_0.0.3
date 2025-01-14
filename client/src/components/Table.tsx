@@ -1,5 +1,5 @@
 import React from "react";
-import { role } from "@/lib/data";
+import { role } from "@/lib/utils";
 
 const Table = ({
   columns,
@@ -19,7 +19,7 @@ const Table = ({
               {col.header}
             </th>
           ))}
-          {role === "ADMIN" && <th className="rounded-tr-md"></th>}
+          {role === "admin" && <th className="rounded-tr-md"></th>}
         </tr>
       </thead>
       <tbody>{data.map((item) => renderRow(item))}</tbody>
