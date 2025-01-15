@@ -1,4 +1,4 @@
-// export let role = "admin";
+export let role = "admin";
 // export let role = "user";
 // export let role = "guest";
 

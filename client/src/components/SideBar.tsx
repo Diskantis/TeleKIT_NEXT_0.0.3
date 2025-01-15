@@ -1,50 +1,25 @@
-import React from "react";
+"use client";
 
-import { currentUser } from "@clerk/nextjs/server";
+import React, { useState } from "react";
 import Link from "next/link";
 
-const SideBar = async () => {
-  const user = await currentUser();
-  const role = user?.publicMetadata.role as string;
+type Menu = {
+  icon: string;
+  label: string;
+  href: string;
+  visible: string[];
+}[];
 
-  const menu = [
-    {
-      icon: "/icon.svg#home",
-      label: "Главная",
-      href: `/${role}`,
-      visible: ["admin", "user", "guest"],
-    },
-    {
-      icon: "/icon.svg#calendar",
-      label: "Расписание",
-      href: "/list/events",
-      visible: ["admin", "user", "guest"],
-    },
-    {
-      icon: "/icon.svg#kit",
-      label: "Комплекты",
-      href: "/list/kits",
-      visible: ["admin", "user"],
-    },
-    {
-      icon: "/icon.svg#camera",
-      label: "Оборудование",
-      href: "/list/equipments",
-      visible: ["admin", "user"],
-    },
-    {
-      icon: "/icon.svg#people",
-      label: "Получатели",
-      href: "/list/recipients",
-      visible: ["admin", "user"],
-    },
-    {
-      icon: "/icon.svg#people",
-      label: "Пользователи",
-      href: "/list/users",
-      visible: ["admin"],
-    },
-  ];
+const SideBar = ({
+  menu,
+  role,
+  pathPage,
+}: {
+  menu: Menu;
+  role: string;
+  pathPage: string;
+}) => {
+  const [path, setPath] = useState(pathPage);
 
   return (
     <div className="flex flex-col gap-2 mt-6">
@@ -55,13 +30,13 @@ const SideBar = async () => {
               return (
                 <div
                   key={item.label}
-                  className={`rounded-r-md hover:bg-cyan-900
-                 xs:pl-4 xs:rounded-r-none md:rounded-r-md`}
+                  className={`${item.href === path ? "bg-cyan-950" : ""} rounded-r-md hover:bg-cyan-900 
+                  xs:pl-3 xs:rounded-r-none md:rounded-r-md`}
                 >
                   <Link
                     href={item.href}
-                    className="2xl:flex items-center justify-center lg:justify-start text-gray-200"
-                    // onClick={() => setPath(item.href)}
+                    className="2xl:flex items-center justify-center lg:justify-start text-gray-200 pr-2"
+                    onClick={() => setPath(item.href)}
                   >
                     <svg
                       className="w-6 h-5 mr-2 hiddenjustify-center fill-gray-300
@@ -79,11 +54,12 @@ const SideBar = async () => {
           })}
         </div>
         <div
-          className={`rounded-r-md hover:bg-cyan-900 xs:px-4 xs:rounded-r-none md:rounded-r-md`}
+          className={`rounded-r-md hover:bg-cyan-900 xs:px-3 xs:rounded-r-none md:rounded-r-md`}
         >
           <Link
             href="/"
             className="2xl:flex items-center justify-center lg:justify-start text-gray-200"
+            onClick={() => setPath("/")}
           >
             <svg className="w-6 h-5 mr-2 hiddenjustify-center fill-gray-300 xs:flex lg:hidden 2xl:flex">
               <use xlinkHref="/icon.svg#logout" width={20} height={20} />

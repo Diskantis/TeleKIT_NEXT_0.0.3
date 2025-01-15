@@ -9,8 +9,30 @@ import Table from "@/components/Table";
 import Pagination from "@/components/Pagination";
 import TableSearch from "@/components/TableSearch";
 import FormContainer from "@/components/FormContainer";
+import SideBar from "@/components/SideBar";
 
 type EventList = Event & { recipients: Recipient[] } & { kits: Kit[] };
+
+const menu = [
+  {
+    icon: "/icon.svg#home",
+    label: "Главная",
+    href: `/${role}`,
+    visible: ["admin", "user", "guest"],
+  },
+  {
+    icon: "/icon.svg#kit",
+    label: "Список событий",
+    href: "/list/events",
+    visible: ["admin", "user", "guest"],
+  },
+  {
+    icon: "/icon.svg#calendar",
+    label: "Добавить событие",
+    href: "/create/events",
+    visible: ["admin", "user", "guest"],
+  },
+];
 
 const columns = [
   {
@@ -180,35 +202,58 @@ const EventListPage = async ({
   ]);
 
   return (
-    <div className="h-full flex flex-col justify-between bg-gray-900 mr-4 p-4 rounded-md">
-      <div className="flex items-center justify-between">
-        <h1 className="hidden md:block text-2xl font-semibold">События</h1>
-        <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
-          <TableSearch />
-          <div className="flex items-center gap-4 self-end">
-            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-orange-400">
-              <svg className="w-4 h-4 fill-slate-900">
-                <use xlinkHref="/icon.svg#filter" width={16} height={16} />
-              </svg>
-            </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-orange-400">
-              <svg className="w-5 h-5 fill-slate-900">
-                <use xlinkHref="/icon.svg#sort" width={20} height={20} />
-              </svg>
-            </button>
-            {(role === "admin" || role === "user") && (
-              <FormContainer table="event" type="create" />
-            )}
+    <>
+      {/*MAIN*/}
+      <div className="flex">
+        {/*MAIN LEFT*/}
+        <div className="w-[13%] sm:w-[13%] lg:w-[13%]">
+          <div
+            className="h-[calc(100vh-96px)] flex flex-col justify-between bg-gray-900 mx-4 py-4 rounded-md
+            xs:pr-0 md:pr-3"
+          >
+            <SideBar menu={menu} pathPage="/list/events" role={role!} />
+          </div>
+        </div>
+        {/*MAIN RIGHT*/}
+        <div className="w-[87%] sm:w-[87%] lg:w-[87%]">
+          <div className="h-full flex flex-col justify-between bg-gray-900 mr-4 p-4 rounded-md">
+            <div className="flex items-center justify-between">
+              <h1 className="hidden md:block text-2xl font-semibold">
+                Список событий
+              </h1>
+              <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+                <TableSearch />
+                <div className="flex items-center gap-4 self-end">
+                  <button className="w-8 h-8 flex items-center justify-center rounded-full bg-orange-400">
+                    <svg className="w-4 h-4 fill-slate-900">
+                      <use
+                        xlinkHref="/icon.svg#filter"
+                        width={16}
+                        height={16}
+                      />
+                    </svg>
+                  </button>
+                  <button className="w-8 h-8 flex items-center justify-center rounded-full bg-orange-400">
+                    <svg className="w-5 h-5 fill-slate-900">
+                      <use xlinkHref="/icon.svg#sort" width={20} height={20} />
+                    </svg>
+                  </button>
+                  {(role === "admin" || role === "user") && (
+                    <FormContainer table="event" type="create" />
+                  )}
+                </div>
+              </div>
+            </div>
+            {/*LIST*/}
+            <div className=" flex-grow-[1] mt-3">
+              <Table columns={columns} renderRow={renderRow} data={data} />
+            </div>
+            {/*PAGINATION*/}
+            <Pagination page={p} count={count} />
           </div>
         </div>
       </div>
-      {/*LIST*/}
-      <div className=" flex-grow-[1] mt-3">
-        <Table columns={columns} renderRow={renderRow} data={data} />
-      </div>
-      {/*PAGINATION*/}
-      <Pagination page={p} count={count} />
-    </div>
+    </>
   );
 };
 
