@@ -30,12 +30,13 @@ const InputField = ({
 }: InputFieldProps) => {
   return (
     <div className={hidden ? "hidden" : `flex flex-col gap-2 ${size}`}>
-      <label className="text-sm text-gray-500">{label}</label>
+      <label className="text-sm text-gray-400">{label}</label>
       <input
         disabled={disable}
         type={type}
         defaultValue={defaultValue}
-        className={`ring-[1.5px] ring-gray-300 p-2 ${padding} rounded-md text-base w-full bg-gray-700 outline-none`}
+        className={`w-full p-2 ${padding} rounded-md text-xs outline-none
+        ${disable ? "ring-0 bg-gray-800" : "ring-[1px] ring-gray-300 bg-gray-700"}`}
         {...register(name)}
         {...inputProps}
       />
