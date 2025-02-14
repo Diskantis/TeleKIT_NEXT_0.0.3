@@ -21,6 +21,8 @@ export default {
       colors: {
         yellow: "#fdba74",
         def: "#155e75",
+        mainBackgroundColor: "#0D1117",
+        columnBackgroundColor: "#161C22",
       },
     },
   },

@@ -2,7 +2,7 @@ import React from "react";
 
 import { role } from "@/lib/utils";
 import SideBar from "@/components/SideBar";
-import CreateFormContainer from "@/components/CreateFormContainer";
+import KitDnDBoard from "@/components/DnD/KitDnDBoard";
 
 const KitCreatePage = () => {
   const menu = [
@@ -42,7 +42,7 @@ const KitCreatePage = () => {
         {/*MAIN RIGHT*/}
         <div className="w-[87%] sm:w-[87%] lg:w-[87%]">
           <div className="h-full flex flex-col justify-between bg-gray-900 mr-4 p-4 rounded-md">
-            <CreateFormContainer table="kit" type="create" />
+            <KitDnDBoard />
           </div>
         </div>
       </div>

@@ -13,6 +13,12 @@ const KitCreateForm = dynamic(
     loading: () => <Spin fullscreen />,
   },
 );
+const KitCreateFormDND = dynamic(
+  () => import("@/components/forms/KitCreateFormDND"),
+  {
+    loading: () => <Spin fullscreen />,
+  },
+);
 
 const forms: {
   [key: string]: (

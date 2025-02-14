@@ -10,7 +10,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import InputField from "@/components/elements/InputField";
 import TableSearch from "@/components/TableSearch";
-import KitEquipmentsContainer from "@/components/KitEquipmentsContainer";
+import KitEquipmentsContainer_1 from "@/components/DnD/temp/KitEquipmentsContainer_1";
+import KitDnDContainer_3 from "@/components/DnD_6/KitDnDContainer_3";
 
 const KitCreateForm = ({
   type,
@@ -137,14 +138,14 @@ const KitCreateForm = ({
                     </div>
                   </div>
                   <div className="w-3/4 flex flex-col pl-2 gap-2">
-                    <InputField
-                      label="Название"
-                      name="name"
-                      size="w-full"
-                      register={register}
-                      defaultValue={data?.name}
-                      error={errors?.name}
-                    />
+                    {/*<InputField*/}
+                    {/*  label="Название"*/}
+                    {/*  name="name"*/}
+                    {/*  size="w-full"*/}
+                    {/*  register={register}*/}
+                    {/*  defaultValue={data?.name}*/}
+                    {/*  error={errors?.name}*/}
+                    {/*/>*/}
                   </div>
                 </div>
                 {state.error && (
@@ -156,11 +157,11 @@ const KitCreateForm = ({
               </div>
             </form>
           </div>
-          <div className="w-1/2 h-[calc(100vh-256px)] flex flex-col justify-between bg-gray-700 rounded-md">
+          <div className="w-1/2 h-[calc(100vh-256px)] flex flex-row justify-center bg-gray-700 rounded-md">
             <h2 className="text-xl text-center font-semibold my-2">
               Оборудование
             </h2>
-            <KitEquipmentsContainer />
+            <KitDnDContainer_3 />
           </div>
         </div>
         <div className="w-full h-[30px] bg-cyan-950 border-t-2 rounded-b-md mt-3"></div>
